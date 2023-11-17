@@ -1,0 +1,27 @@
+{
+  "name": "chit-chat-connect-backend",
+  "version": "1.0.0",
+  "description": "Social network app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bojan-ilic/chit-chat-connect-backend.git"
+  },
+  "author": "Bojan Ilic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bojan-ilic/chit-chat-connect-backend/issues"
+  },
+  "homepage": "https://github.com/bojan-ilic/chit-chat-connect-backend#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.1"
+  }
+}
