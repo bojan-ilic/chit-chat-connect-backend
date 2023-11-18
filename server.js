@@ -25,7 +25,7 @@ mongoose
 /**
  * Route for the root URL
  * @param {Object} req - Express request object
- * @param {Object} res = Express response object
+ * @param {Object} res - Express response object
  */
 server.get('/', (req, res) => {
     // Determine application name based on environment
