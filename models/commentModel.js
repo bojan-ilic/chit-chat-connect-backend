@@ -3,7 +3,8 @@ const { Schema, model } = require('mongoose');
 
 /**
  * Comment Schema
- * Defines the structure of the comments collection in MongoDB
+ * Defines the structure of the comments in the 'comments' collection in MongoDB.
+ * Represents the properties and format of comments stored in MongoDB 'comments' collection.
  */
 const CommentSchema = new Schema({
     body: { type: String, required: true }, // Body of the comment
@@ -19,11 +20,12 @@ const CommentSchema = new Schema({
 
 /**
  * CommentModel
- * Mongoose model based on CommentSchema, represents the 'comments' collection
+ * Mongoose model based on CommentSchema, represents the 'comments' collection.
+ * Provides access to CRUD operations for comments in MongoDB.
  */
 const CommentModel = model('comments', CommentSchema);
 
 /**
- * Exports the CommentModel to enable its use throughout the app
+ * Exports the CommentModel to enable its use throughout the application.
  */
 module.exports = CommentModel;
