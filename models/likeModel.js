@@ -17,6 +17,7 @@ const LikeSchema = new Schema({
 /**
  * LikeModel
  * Mongoose model based on LikeSchema, represents the 'likes' collection.
+ * Provides access to CRUD operations for comments in MongoDB.
  */
 const LikeModel = model('likes', LikeSchema);
 

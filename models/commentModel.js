@@ -21,6 +21,7 @@ const CommentSchema = new Schema({
 /**
  * CommentModel
  * Mongoose model based on CommentSchema, represents the 'comments' collection.
+ * Provides access to CRUD operations for comments in MongoDB.
  */
 const CommentModel = model('comments', CommentSchema);
 
