@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 
 /**
  * User Schema
- * Defines the structure of the users collection in MongoDB.
+ * Defines the structure of the users in the 'users' collection in MongoDB.
  * Represents the properties and format of user profiles stored in MongoDB 'users' collection.
  */
 const UserSchema = new Schema({

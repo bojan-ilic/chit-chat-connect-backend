@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 
 /**
  * LikeSchema
- * Defines the structure of the likes collection in MongoDB.
+ * Defines the structure of the likes in 'likes' collection in MongoDB.
  * Represents the properties and format of likes stored in MongoDB 'likes' collection.
  */
 const LikeSchema = new Schema({

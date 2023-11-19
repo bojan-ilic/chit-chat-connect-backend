@@ -2,11 +2,10 @@
 const { Schema, model } = require('mongoose');
 
 /**
- * TagsSchema
- * Defines the structure of tags within the PostSchema.
+ * TagSchema
+ * Defines the structure of the tags within the 'posts' collection in MongoDB.
  * Represents the properties and format of tags stored in MongoDB.
  */
-
 const TagSchema = new Schema(
     {
         name: { type: String, required: true }, // Name of the tag
@@ -25,8 +24,8 @@ const validateField = (field) => field.length > 0; // Validation function checks
 
 /**
  * PostSchema
- * Defines the structure of the posts collection in MongoDB.
- * Represent the properties and format of posts stored in MongoDB 'posts' collection.
+ * Defines the structure of the posts within 'posts' collection in MongoDB.
+ * Represents the properties and format of posts stored in MongoDB 'posts' collection.
  */
 const PostSchema = new Schema(
     {

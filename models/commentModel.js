@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 
 /**
  * Comment Schema
- * Defines the structure of the comments collection in MongoDB.
+ * Defines the structure of the comments in the 'comments' collection in MongoDB.
  * Represents the properties and format of comments stored in MongoDB 'comments' collection.
  */
 const CommentSchema = new Schema({

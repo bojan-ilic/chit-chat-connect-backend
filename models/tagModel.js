@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 
 /**
  * Tag Schema
- * Defines the structure of the tags collection in MongoDB.
+ * Defines the structure of the tags in the 'tags' collection in MongoDB.
  * Represents the properties and format of tags stored in MongoDB 'tags' collection.
  */
 const TagSchema = new Schema({
