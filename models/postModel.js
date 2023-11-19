@@ -59,10 +59,12 @@ const PostSchema = new Schema(
  * PostModel
  * Mongoose model based on PostSchema, represents the 'posts' collection.
  * Provides access to CRUD operations for posts in MongoDB.
+ * @exports PostModel
  */
 const PostModel = model('posts', PostSchema);
 
 /**
  * Exports the PostModel to enable its use throughout the application.
+ * @module postModel
  */
 module.exports = PostModel;

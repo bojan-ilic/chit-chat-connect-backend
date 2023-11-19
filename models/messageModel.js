@@ -18,10 +18,12 @@ const MessageSchema = new Schema({
  * MessageModel
  * Mongoose model based on MessageSchema, represents the 'messages' collection.
  * Provides access to CRUD operations for messages in MongoDB.
+ * @exports MessageModel
  */
 const MessageModel = model('messages', MessageSchema);
 
 /**
  * Exports the MessageModel to enable its use throughout the application.
+ * @module messageModel
  */
 module.exports = MessageModel;

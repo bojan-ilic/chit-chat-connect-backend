@@ -14,10 +14,12 @@ const TagSchema = new Schema({
  * TagModel
  * Mongoose model based on TagSchema, represents the 'tags' collection.
  * Provides access to CRUD operations for tags in MongoDB.
+ * @exports TagModel
  */
 const TagModel = model('tags', TagSchema);
 
 /**
  * Exports the TagModel to enable its use throughout the application.
+ * @module tagModel
  */
 module.exports = TagModel;

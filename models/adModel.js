@@ -21,10 +21,12 @@ const AdSchema = new Schema({
  * AdModel
  * Mongoose model based on AdSchema, represents the 'ads' collection.
  * Provides access to CRUD operations for the advertisements in MongoDB.
+ * @exports AdModel
  */
 const AdModel = model('ads', AdSchema);
 
 /**
  * Exports the AdModel to enable its use throughout the application.
+ * @module adModel
  */
 module.exports = AdModel;

@@ -22,10 +22,12 @@ const CommentSchema = new Schema({
  * CommentModel
  * Mongoose model based on CommentSchema, represents the 'comments' collection.
  * Provides access to CRUD operations for comments in MongoDB.
+ * @exports CommentModel
  */
 const CommentModel = model('comments', CommentSchema);
 
 /**
  * Exports the CommentModel to enable its use throughout the application.
+ * @module commentModel
  */
 module.exports = CommentModel;

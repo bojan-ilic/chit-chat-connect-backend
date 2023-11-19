@@ -18,10 +18,12 @@ const LikeSchema = new Schema({
  * LikeModel
  * Mongoose model based on LikeSchema, represents the 'likes' collection.
  * Provides access to CRUD operations for comments in MongoDB.
+ * @exports LikeModel
  */
 const LikeModel = model('likes', LikeSchema);
 
 /**
  * Exports the LikeModel to enable its use throughout the application.
+ * @module likeModel
  */
 module.exports = LikeModel;

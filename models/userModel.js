@@ -23,10 +23,12 @@ const UserSchema = new Schema({
  * UserModel
  * Mongoose model based on UserSchema, represents the 'users' collection.
  * Provides access to CRUD operations for users in MongoDB.
+ * @exports UserModel
  */
 const UserModel = model('users', UserSchema);
 
 /**
  * Exports the UserModel to enable its use throughout the application.
+ * @module userModel.js
  */
 module.exports = UserModel;
