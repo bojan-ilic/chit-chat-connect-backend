@@ -49,7 +49,7 @@ const verifyToken = (req, res, next) => {
                 } catch (error) {
                     // Error occurred during user retrieval, send service error response
                     res.status(httpStatus.SERVICE_ERROR.status).send(
-                        httpStatus.SERVICE_ERROR.send,
+                        httpStatus.SERVICE_ERROR.message,
                     );
                 }
             }
