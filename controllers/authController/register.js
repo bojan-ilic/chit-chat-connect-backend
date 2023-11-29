@@ -1,5 +1,5 @@
 // Import the User model to interact with the database
-const UserModel = require('../../models/UserModel');
+const UserModel = require('../../models/userModel.js');
 
 // Import the bcrypt for password hashing
 const bcrypt = require('bcrypt');

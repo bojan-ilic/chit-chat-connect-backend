@@ -22,6 +22,9 @@ mongoose
     .then(() => console.log('MongoDB connected'))
     .catch((error) => console.error('MongoDB connection error: ', error));
 
+// Middleware to parse JSON data with a size limit of 10mb
+server.use(express.json({ limit: '10mb' }));
+
 /**
  * Route for the root URL
  * @param {Object} req - Express request object
@@ -38,6 +41,9 @@ server.get('/', (req, res) => {
     // Send welcome message based on environment and app name
     res.send(`Welcome to the ${environmentMessage} environment of ${appName}`);
 });
+
+// Set up API routes handling for requests starting with '/api'
+server.use('/api', require('./routes'));
 
 /**
  * Listens for a termination signal (SIGINT: Signal Interrupt) to ensure graceful shutdown by closing the MongoDB connection.
