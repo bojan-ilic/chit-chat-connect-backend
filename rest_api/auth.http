@@ -3,8 +3,8 @@ POST {{base_url}}/auth/register
 Content-Type: {{content_type}}
 
 {
-	"firstName": "Bojan",
-	"lastName": "Ilic",
-	"email": "ilic.bojan.bi@gmail.com",
-	"password": "Bojan123456"
+	"firstName": "{{firstName}}",
+	"lastName": "{{lastName}}",
+	"email": "{{email}}",
+	"password": "{{password}}"
 }
