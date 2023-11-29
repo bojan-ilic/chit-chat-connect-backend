@@ -39,13 +39,13 @@ const AddAd = async (req, res) => {
         if (saveAd) {
             res.send(saveAd);
         } else {
-            res.status(httpStatus.SERVICE_ERROR.status).send({
+            res.status(httpStatus.SERVICE_ERROR.code).send({
                 error: 'The ad is not saved in the database.',
             });
         }
     } catch (error) {
         // Handling errors and sending appropriate error response
-        res.status(httpStatus.SERVICE_ERROR.status).send({
+        res.status(httpStatus.SERVICE_ERROR.code).send({
             error: error.message,
         });
     }
