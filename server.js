@@ -23,6 +23,7 @@ mongoose
     .catch((error) => console.error('MongoDB connection error: ', error));
 
 // Middleware to parse JSON data with a size limit of 10mb
+// Crucial for handling POST requests that contain JSON data
 server.use(express.json({ limit: '10mb' }));
 
 /**
