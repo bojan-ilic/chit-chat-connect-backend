@@ -8,3 +8,14 @@ Content-Type: {{content_type}}
 	"email": "{{email}}",
 	"password": "{{password}}"
 }
+
+### LOGIN
+POST {{base_url}}/auth/login
+Content-Type: {{content_type}}
+
+{
+  "email": "ilic.bojan.bi@gmail.com",
+  "password": "Bojan123"
+}
+
+

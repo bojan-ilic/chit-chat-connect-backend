@@ -35,6 +35,15 @@ module.exports = {
         },
 
         /**
+         * Success
+         */
+        // Indicates successful completion of the request
+        SUCCESS: {
+            code: 200,
+            message: 'Success',
+        },
+
+        /**
          * Server Errors
          */
         // Indicates that the server encountered an unexpected condition that prevented it from fulfilling the request
