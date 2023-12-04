@@ -17,7 +17,7 @@ const router = new express.Router();
 router.use('/auth', require('./auth'));
 
 // Routes for creating, fetching, and deleting posts
-// router.use('/posts', require('./posts'));
+router.use('/posts', require('./posts'));
 
 // Routes managing comments on posts
 // router.use('/comments', require('./comments'));
