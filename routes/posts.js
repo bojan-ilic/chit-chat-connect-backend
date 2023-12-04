@@ -18,25 +18,25 @@ const router = new Router();
  * @description Route to fetch all posts
  * @route GET /api/posts/all
  */
-router.get('/all', require('../controller/postController/allPosts'));
+// router.get('/all', require('../controllers/postController/addPost'));
 
 /**
  * @description Route to search for posts
  * @route GET /api/posts/search
  */
-router.get('/search', require('../controller/postController/searchPost'));
+// router.get('/search', require('../controllers/postController/searchPost'));
 
 /**
  * @description Route to filter posts
  * @route GET /api/posts/filter
  */
-router.get('/filter', require('../controller/postController/filterPosts'));
+// router.get('/filter', require('../controllers/postController/filterPosts'));
 
 /**
  * @description Route to get a single post by ID
  * @route GET /api/posts/:id
  */
-router.get('/:id', require('../controller/postController/getSinglePost'));
+// router.get('/:id', require('../controllers/postController/getSinglePost'));
 
 /**
  * @description Route to add a new post
@@ -46,7 +46,7 @@ router.get('/:id', require('../controller/postController/getSinglePost'));
 router.post(
     '/add',
     verifyToken,
-    require('../controller/postController/addPost'),
+    require('../controllers/postController/addPost'),
 );
 
 /**
@@ -55,11 +55,11 @@ router.post(
  * @param {string} id - The ID of the post to delete
  * @middleware verifyToken - Ensures user authentication before deleting a post
  */
-router.delete(
-    '/:id',
-    verifyToken,
-    require('../controller/postController/deletePost'),
-);
+// router.delete(
+//     '/:id',
+//     verifyToken,
+//     require('../controllers/postController/deletePost'),
+// );
 
 /**
  * Exports the router for post-related operations to enable its use throughout the application.

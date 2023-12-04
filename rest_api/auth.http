@@ -15,7 +15,7 @@ Content-Type: {{content_type}}
 
 {
   "email": "ilic.bojan.bi@gmail.com",
-  "password": "Bojan123"
+  "password": "{{password}}"
 }
 
 
