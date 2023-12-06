@@ -55,11 +55,11 @@ router.post(
  * @param {string} id - The ID of the post to delete
  * @middleware verifyToken - Ensures user authentication before deleting a post
  */
-// router.delete(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/postController/deletePost'),
-// );
+router.delete(
+    '/:id',
+    verifyToken,
+    require('../controllers/postController/deletePost'),
+);
 
 /**
  * Exports the router for post-related operations to enable its use throughout the application.

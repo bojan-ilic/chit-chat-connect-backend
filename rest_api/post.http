@@ -1,0 +1,27 @@
+### ADD POST
+POST {{base_url}}/posts/add
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+    "body": "Post body content",
+    "title": "Post title content",
+    "image": "https://www.example.com/images/sample.jpg",
+    "isPublic": true,
+    "tags": [
+        {
+            "name": "Tag 1"
+        },
+		{
+			"name": "Tag 2"
+		},
+		{
+			"name": "Tag 3"
+		}
+    ]
+}
+
+### DELETE THE POST
+DELETE {{base_url}}/posts/{{post_id}}
+Content-Type: application/json
+Authorization: {{authorization_token}}
