@@ -50,6 +50,18 @@ router.post(
 );
 
 /**
+ * @description Route to update a specific post by ID
+ * @route PUT /api/posts/:id
+ * @param {string} id - The ID of the post to update
+ * @middleware verifyToken - Ensures user authentication before updating the post
+ */
+router.put(
+    '/:id',
+    verifyToken,
+    require('../controllers/postController/updatePost'),
+);
+
+/**
  * @description Route to delete a specific post by ID
  * @route DELETE /api/posts/:id
  * @param {string} id - The ID of the post to delete
