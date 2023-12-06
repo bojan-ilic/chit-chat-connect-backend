@@ -23,5 +23,26 @@ Authorization: {{authorization_token}}
 
 ### DELETE THE POST
 DELETE {{base_url}}/posts/{{post_id}}
-Content-Type: application/json
+Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
+
+### UPDATE POST BY ID
+PUT {{base_url}}/posts/{{post_id}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+    "body": "Updated body content.",
+    "title": "Updated Post Title",
+    "image": "https://example.com/image.jpg",
+    "isPublic": true,
+    "tags": [
+        {
+            "name": "Tag 1 Updated"
+        },
+        {
+            "name": "Tag 2 Updated"
+        }
+    ]
+}
+
