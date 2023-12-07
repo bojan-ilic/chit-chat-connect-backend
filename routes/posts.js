@@ -18,7 +18,7 @@ const router = new Router();
  * @description Route to fetch all posts
  * @route GET /api/posts/all
  */
-// router.get('/all', require('../controllers/postController/addPost'));
+router.get('/all', require('../controllers/postController/getAllPosts'));
 
 /**
  * @description Route to search for posts

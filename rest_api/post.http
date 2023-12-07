@@ -1,13 +1,19 @@
+### GET ALL POSTS
+GET {{base_url}}/posts/all
+
+### GET ALL POSTS (Paginated and Filtered by Public Status)
+GET {{base_url}}/posts/all?page=1&limit=2&public=1
+
 ### ADD POST
 POST {{base_url}}/posts/add
 Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
 
 {
-    "body": "Post body content 07.12.2023 TEST1",
+    "body": "Post body content",
     "title": "Post title content",
     "image": "https://www.example.com/images/sample.jpg",
-    "isPublic": true,
+    "isPublic": false,
     "tags": [
         {
             "name": "Tag 1"
@@ -45,4 +51,7 @@ Authorization: {{authorization_token}}
         }
     ]
 }
+
+
+
 
