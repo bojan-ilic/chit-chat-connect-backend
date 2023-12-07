@@ -8,7 +8,6 @@ const PostModel = require('../../models/postModel');
  * Handles updating a specific post based on user permissions.
  * @param {Object} req - The request object containing information about the client request.
  * @param {Object} res - The response object used to send the response back to the client.
- * @returns {void}
  */
 const updatePost = async (req, res) => {
     try {
@@ -16,23 +15,52 @@ const updatePost = async (req, res) => {
         const user = req.locals;
 
         // Extracting post ID from request parameters
-        const { _id: postId } = req.params;
+        const postId = req.params.id;
 
-        // Extracting userId and remaining updated data from request body
-        const { userId, ...updatedData } = req.body;
+        // Fetching the post by ID to get the userId associated with it
+        const post = await PostModel.findById(postId);
 
-        // Variable to store the query to find the post
-        let query;
+        // Check if the post doesn't exist in the database
+        if (!post) {
+            // If the post is not found, send a response indicating the post was not found
+            return res.status(httpStatus.NOT_FOUND.code).send({
+                status: 'error',
+                message: httpStatus.NOT_FOUND.message,
+                customMessage: 'Post not found.',
+            });
+        }
 
-        // Checking user roles and constructing the query accordingly
-        if (user.role === 'admin') {
-            // Admins can update any post
-            query = { _id: postId };
-        } else if (user._id === userId && user.role !== 'admin') {
-            // Users can update their own posts
-            query = { $and: [{ _id: postId }, { userId: user._id }] };
+        // Checking user roles and permissions
+        if (
+            user.role === 'admin' ||
+            user._id.toString() === post.userId.toString()
+        ) {
+            // Users can update their own posts or admins can update any post
+            const { body, title, image, isPublic, tags } = req.body;
+            const updatedData = {
+                body,
+                title,
+                image,
+                isPublic,
+                tags,
+            };
+
+            // Update the post in the database
+            const updatedPost = await PostModel.findOneAndUpdate(
+                { _id: postId },
+                updatedData,
+                { new: true },
+            );
+
+            // Sending success response with the updated post
+            return res.status(httpStatus.SUCCESS.code).send({
+                status: 'success',
+                message: httpStatus.SUCCESS.message,
+                customMessage: 'Post updated successfully.',
+                updatedPost,
+            });
         } else {
-            // Handling cases where the user doesn't have permission to update the post
+            // If the user does not have the necessary permissions to update the post
             return res.status(httpStatus.NOT_HAVE_PERMISSION.code).send({
                 status: 'error',
                 message: httpStatus.NOT_HAVE_PERMISSION.message,
@@ -40,31 +68,6 @@ const updatePost = async (req, res) => {
                     "You don't have permission to change other users' posts.",
             });
         }
-
-        // Finding and updating the post in the database
-        const updatedPost = await PostModel.findOneAndUpdate(
-            query,
-            updatedData,
-            { new: true },
-        );
-
-        // Checking if the post was not found or the user lacks permission to update
-        if (!updatedPost) {
-            return res.status(httpStatus.NOT_FOUND.code).send({
-                status: 'error',
-                message: httpStatus.NOT_FOUND.message,
-                customMessage:
-                    'Post not found or you do not have permission to update.',
-            });
-        }
-
-        // Sending success response with the updated post
-        res.status(httpStatus.SUCCESS.code).send({
-            status: 'success',
-            message: httpStatus.SUCCESS.message,
-            customMessage: 'Post updated successfully.',
-            updatedPost,
-        });
     } catch (error) {
         // Handling any unexpected errors and sending a service error response
         res.status(httpStatus.SERVICE_ERROR.code).send({

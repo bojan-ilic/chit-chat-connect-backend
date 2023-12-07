@@ -4,7 +4,7 @@ Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
 
 {
-    "body": "Post body content",
+    "body": "Post body content 07.12.2023 TEST1",
     "title": "Post title content",
     "image": "https://www.example.com/images/sample.jpg",
     "isPublic": true,
@@ -32,9 +32,9 @@ Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
 
 {
-    "body": "Updated body content.",
+    "body": "Updated Post body content",
     "title": "Updated Post Title",
-    "image": "https://example.com/image.jpg",
+    "image": "https://example.com/updated-image.jpg",
     "isPublic": true,
     "tags": [
         {
