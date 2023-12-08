@@ -10,6 +10,9 @@ GET {{base_url}}/posts/{{post_id}}
 ### GET POST BY TAGS
 GET {{base_url}}/posts/filter?tags=magical&tags=classic
 
+### SEARCH POST
+GET {{base_url}}/posts/search?searchQuery=magical
+
 ### ADD POST
 POST {{base_url}}/posts/add
 Content-Type: {{content_type}}

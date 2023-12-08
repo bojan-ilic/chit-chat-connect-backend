@@ -24,7 +24,7 @@ router.get('/all', require('../controllers/postController/getAllPosts'));
  * @description Route to search for posts
  * @route GET /api/posts/search
  */
-// router.get('/search', require('../controllers/postController/searchPost'));
+router.get('/search', require('../controllers/postController/searchPost'));
 
 /**
  * @description Route to filter posts
