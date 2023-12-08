@@ -30,7 +30,7 @@ router.get('/all', require('../controllers/postController/getAllPosts'));
  * @description Route to filter posts
  * @route GET /api/posts/filter
  */
-// router.get('/filter', require('../controllers/postController/filterPosts'));
+router.get('/filter', require('../controllers/postController/filterPosts'));
 
 /**
  * @description Route to get a single post by ID

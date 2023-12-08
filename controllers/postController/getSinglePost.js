@@ -6,9 +6,9 @@ const PostModel = require('../../models/postModel');
 
 // Importing pre-defined pipeline stages for joining related collections (users, comments, likes) to enrich post data
 const {
-    joinPostUser, // joins user data with posts
-    joinCommentsPost, // joins comments data with posts
-    joinLikesPost, // joins likes data with posts
+    joinPostUser, // Joins user data with posts
+    joinCommentsPost, // Joins comments data with posts
+    joinLikesPost, // Joins likes data with posts
 } = require('../../stages/joins');
 
 /**

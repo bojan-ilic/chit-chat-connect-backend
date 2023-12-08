@@ -7,6 +7,9 @@ GET {{base_url}}/posts/all?page=1&limit=2&public=1
 ### GET POST BY ID
 GET {{base_url}}/posts/{{post_id}}
 
+### GET POST BY TAGS
+GET {{base_url}}/posts/filter?tags=magical&tags=classic
+
 ### ADD POST
 POST {{base_url}}/posts/add
 Content-Type: {{content_type}}
@@ -19,13 +22,13 @@ Authorization: {{authorization_token}}
     "isPublic": false,
     "tags": [
         {
-            "name": "Tag 1"
+            "name": "tag1"
         },
 		{
-			"name": "Tag 2"
+			"name": "tag2"
 		},
 		{
-			"name": "Tag 3"
+			"name": "tag3"
 		}
     ]
 }
@@ -47,10 +50,10 @@ Authorization: {{authorization_token}}
     "isPublic": true,
     "tags": [
         {
-            "name": "Tag 1 Updated"
+            "name": "tag1updated"
         },
         {
-            "name": "Tag 2 Updated"
+            "name": "tag2updated"
         }
     ]
 }
