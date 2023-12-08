@@ -4,6 +4,9 @@ GET {{base_url}}/posts/all
 ### GET ALL POSTS (Paginated and Filtered by Public Status)
 GET {{base_url}}/posts/all?page=1&limit=2&public=1
 
+### GET POST BY ID
+GET {{base_url}}/posts/{{post_id}}
+
 ### ADD POST
 POST {{base_url}}/posts/add
 Content-Type: {{content_type}}

@@ -36,7 +36,7 @@ router.get('/all', require('../controllers/postController/getAllPosts'));
  * @description Route to get a single post by ID
  * @route GET /api/posts/:id
  */
-// router.get('/:id', require('../controllers/postController/getSinglePost'));
+router.get('/:id', require('../controllers/postController/getSinglePost'));
 
 /**
  * @description Route to add a new post
