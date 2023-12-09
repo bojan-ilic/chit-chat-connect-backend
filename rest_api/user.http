@@ -1,3 +1,14 @@
 ### GET ALL USERS
 GET {{base_url}}/users
 
+### ADD A NEW USER
+POST {{base_url}}/users
+Content-Type: {{content_type}}
+
+{
+	"firstName": "Emily",
+	"lastName": "Anderson",
+	"email": "emily.anderson765@gmail.com",
+	"password": "Anderson#567"
+}
+

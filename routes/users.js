@@ -24,7 +24,7 @@ router.get('/', require('../controllers/userController/getAllUsers'));
  * @description Route to add a new user
  * @route POST /api/users
  */
-// router.post('/', require('../controllers/userController/addUser'));
+router.post('/', require('../controllers/userController/addUser'));
 
 /**
  * @description Route to update a specific user by IDBCursor
