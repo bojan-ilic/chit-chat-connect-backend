@@ -11,7 +11,7 @@ const express = require('express');
 const router = new express.Router();
 
 // Routes related to managing users' data
-// router.use('/user', require('./user'));
+router.use('/users', require('./users'));
 
 // Routes handling user authentication, login, and signup
 router.use('/auth', require('./auth'));

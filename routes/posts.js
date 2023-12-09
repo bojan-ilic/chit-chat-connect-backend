@@ -1,10 +1,10 @@
-// Import Express Router
+// Import the Router module from Express
 const { Router } = require('express');
 
-// Import token verification middleware
+// Import the token verification middleware
 const verifyToken = require('../middleware/verifyToken');
 
-// Initialize Express router
+// Create a new instance of the Express router
 const router = new Router();
 
 /**
