@@ -39,6 +39,12 @@ router.get('/filter', require('../controllers/postController/filterPosts'));
 router.get('/:id', require('../controllers/postController/getSinglePost'));
 
 /**
+ * @description Route to fetch posts by a specific user ID
+ * @route GET /api/posts/user/:userId
+ */
+router.get('/user/:userId', require('../controllers/postController/userPosts'));
+
+/**
  * @description Route to add a new post
  * @route POST /api/posts/add
  * @middleware verifyToken - Ensures user authentication before adding a post

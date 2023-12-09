@@ -13,6 +13,9 @@ GET {{base_url}}/posts/filter?tags=magical&tags=classic
 ### SEARCH POST
 GET {{base_url}}/posts/search?searchQuery=magical
 
+### GET USER'S POSTS
+GET {{base_url}}/posts/user/{{user_id}}
+
 ### ADD POST
 POST {{base_url}}/posts/add
 Content-Type: {{content_type}}
