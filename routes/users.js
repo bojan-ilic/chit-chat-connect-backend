@@ -44,11 +44,11 @@ router.post('/', require('../controllers/userController/addUser'));
  * @param {string} id - The ID of the user to delete
  * @middleware verifyToken - Ensures user authentication before deleting the user
  */
-// router.delete(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/userController/deleteUser'),
-// );
+router.delete(
+    '/:id',
+    verifyToken,
+    require('../controllers/userController/deleteUser'),
+);
 
 /**
  * Exports the router for user-related operations to enable its use throughout the application.

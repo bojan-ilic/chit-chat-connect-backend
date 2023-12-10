@@ -12,3 +12,7 @@ Content-Type: {{content_type}}
 	"password": "Anderson#567"
 }
 
+### DELETE THE USER
+DELETE {{base_url}}/users/{{user_id_to_delete}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
