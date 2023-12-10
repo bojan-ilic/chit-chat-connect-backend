@@ -1,6 +1,9 @@
 ### GET ALL USERS
 GET {{base_url}}/users
 
+### GET THE SINGLE USER BY ID
+GET {{base_url}}/users/{{user_id}}
+
 ### ADD A NEW USER
 POST {{base_url}}/users
 Content-Type: {{content_type}}

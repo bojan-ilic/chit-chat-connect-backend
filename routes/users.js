@@ -21,6 +21,13 @@ const router = new Router();
 router.get('/', require('../controllers/userController/getAllUsers'));
 
 /**
+ * @description Route to fetch a single user by ID
+ * @route GET /api/users/:id
+ * @param {string} id - The ID of the user to retrieve
+ */
+router.get('/:id', require('../controllers/userController/getSingleUser'));
+
+/**
  * @description Route to add a new user
  * @route POST /api/users
  */
