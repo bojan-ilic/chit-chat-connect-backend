@@ -32,11 +32,11 @@ router.post('/', require('../controllers/userController/addUser'));
  * @param {string} id - The ID of the user to update
  * @middleware verifyToken - Ensures user authentication before updating the user
  */
-// router.put(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/userController/updateUser'),
-// );
+router.put(
+    '/:id',
+    verifyToken,
+    require('../controllers/userController/updateUser'),
+);
 
 /**
  * @description Route to delete a specific user by ID

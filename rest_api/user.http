@@ -12,7 +12,19 @@ Content-Type: {{content_type}}
 	"password": "Anderson#567"
 }
 
-### DELETE THE USER
+### UPDATE THE USER BY ID
+PUT {{base_url}}/users/{{user_id_to_update}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+	"firstName": "Michael",
+	"lastName": "Johnson",
+	"gender": "male",
+	"role": "admin"
+}
+
+### DELETE THE USER BY ID
 DELETE {{base_url}}/users/{{user_id_to_delete}}
 Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
