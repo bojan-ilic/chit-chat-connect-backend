@@ -18,7 +18,7 @@ const router = new Router();
  * @description Route to fetch all ads
  * @route GET /api/ads
  */
-router.get('/', require('../controllers/adController/getAllAds;'));
+// router.get('/', require('../controllers/adController/getAllAds;'));
 
 /**
  * @description Route to add a new ad
@@ -32,14 +32,14 @@ router.post('/', verifyToken, require('../controllers/adController/addAd'));
  * @route POST /api/ads/paymentInit
  * @middleware verifyToken - Ensures user authentication before initializing payment
  */
-router.post(
-    '/paymentInit',
-    verifyToken,
-    require('../controllers/adController/paymentInit'),
-);
+// router.post(
+//     '/paymentInit',
+//     verifyToken,
+//     require('../controllers/adController/paymentInit'),
+// );
 
 /**
  * Exports the router for advertisement-related operations to enable its use throughout the application.
  * @module Routes/Ads
  */
-router.module.exports = router;
+module.exports = router;

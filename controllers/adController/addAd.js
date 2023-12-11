@@ -1,28 +1,25 @@
-/**
- * Controller for handling the addition of a new advertisement.
- * Handles the creation and storage of a new advertisement in the database.
- * @module addAd
- */
+// Import HTTP status codes and messages for response handling
+const { httpStatus } = require('../../config/constants');
 
-// Import necessary modules and models
+// Importing the Advertisement Model module representing the schema and functionalities for advertisements
 const AdModel = require('../../models/adModel'); // Importing the Advertisement Model
-const { httpStatus } = require('../../config/constants'); // Importing HTTP status codes
-const moment = require('moment/moment'); // Importing Moment.js for date manipulation
+
+// Importing Moment.js for date manipulation
+const moment = require('moment/moment');
 
 /**
- * AddAd
  * Controller function to add a new advertisement to the database.
  * Extracts necessary data from the request and creates a new ad using AdModel.
- * @param {Object} req - Express request object containing ad details in the body
- * @param {Object} res = Express response object for sending the result
- * @returns {Object} - JSON response indicating the success or error in adding the ad
+ * @param {Object} req - The request object containing advertisement details
+ * @param {Object} res - The response object used to send success message or error message when adding advertisement
+ * @returns {Object} - Returns a response with the saved advertisement or an error message
  */
-const AddAd = async (req, res) => {
+const addAd = async (req, res) => {
     // Extract user ID from the request locals
-    const { _id: userId } = req.locals; // Extracts data from adModel.js
+    const { _id: userId } = req.locals;
 
-    // Extract necessary data from the request body
-    let { startDate, endDate, ...reqBody } = req.body; // Extracts data from adModel.js
+    // Extracts advertisement details from the request body according to the AdModel schema
+    let { startDate, endDate, ...reqBody } = req.body;
 
     // Format the start and end dates using Moment.js
     startDate = new Date(moment(startDate).format('YYYY-MM-DD'));
@@ -37,15 +34,25 @@ const AddAd = async (req, res) => {
 
         // Send the saved advertisement or an error message based on the result
         if (saveAd) {
-            res.send(saveAd);
+            res.send({
+                status: 'success',
+                message: httpStatus.SUCCESS.message,
+                customMessage: 'Advertisement added successfully.',
+                data: saveAd,
+            });
         } else {
             res.status(httpStatus.SERVICE_ERROR.code).send({
-                error: 'The ad is not saved in the database.',
+                status: 'error',
+                message: httpStatus.SERVICE_ERROR.message,
+                customMessage: 'Advertisement addition unsuccessful.',
             });
         }
     } catch (error) {
         // Handling errors and sending appropriate error response
         res.status(httpStatus.SERVICE_ERROR.code).send({
+            status: 'error',
+            message: httpStatus.SERVICE_ERROR.message,
+            customMessage: 'Failed to save advertisement to database.',
             error: error.message,
         });
     }
@@ -54,6 +61,6 @@ const AddAd = async (req, res) => {
 /**
  * Exports the AddAd controller function to enable its use throughout the application.
  * @module addAdController
- * @exports {Function} AddAd - Function for adding a new advertisement
+ * @exports {Function} addAd - Function for adding a new advertisement
  */
-module.exports = AddAd;
+module.exports = addAd;

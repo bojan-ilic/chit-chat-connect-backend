@@ -29,7 +29,7 @@ router.use('/posts', require('./posts'));
 // router.use('/tags', require('./tags'));
 
 // Routes handling advertisement-related operations
-// router.use('/ads', require('./ads'));
+router.use('/ads', require('./ads'));
 
 // Routes managing direct messages between users
 // router.use('/messages', require('./messages'));
