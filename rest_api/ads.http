@@ -15,3 +15,8 @@ Authorization: {{authorization_token}}
     "price": 500,
     "duration": "5"
 }
+
+### DELETE THE AD
+DELETE {{base_url}}/ads/{{ad_id}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
