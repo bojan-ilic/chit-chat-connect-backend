@@ -18,7 +18,7 @@ const router = new Router();
  * @description Route to fetch all ads
  * @route GET /api/ads
  */
-// router.get('/', require('../controllers/adController/getAllAds;'));
+router.get('/', require('../controllers/adController/getAllAds'));
 
 /**
  * @description Route to add a new ad

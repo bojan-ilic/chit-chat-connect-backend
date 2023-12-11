@@ -2,7 +2,7 @@
 const { httpStatus } = require('../../config/constants');
 
 // Importing the Advertisement Model module representing the schema and functionalities for advertisements
-const AdModel = require('../../models/adModel'); // Importing the Advertisement Model
+const AdModel = require('../../models/adModel');
 
 // Importing Moment.js for date manipulation
 const moment = require('moment/moment');

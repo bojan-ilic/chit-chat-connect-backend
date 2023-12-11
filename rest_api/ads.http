@@ -1,3 +1,6 @@
+### GET ALL ADS
+GET {{base_url}}/ads
+
 ### ADD A NEW AD
 POST {{base_url}}/ads
 Content-Type: {{content_type}}
