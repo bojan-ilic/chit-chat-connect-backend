@@ -1,0 +1,2 @@
+### GET ALL THE COMMENTS OF THE POST
+GET {{base_url}}/comments/all/{{post_id}}

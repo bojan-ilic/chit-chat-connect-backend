@@ -20,7 +20,7 @@ router.use('/auth', require('./auth'));
 router.use('/posts', require('./posts'));
 
 // Routes managing comments on posts
-// router.use('/comments', require('./comments'));
+router.use('/comments', require('./comments'));
 
 // Routes for managing likes on posts or comments
 // router.use('/likes', require('./likes'));

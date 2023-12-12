@@ -20,8 +20,7 @@ const getAllUsers = async (req, res) => {
         res.status(httpStatus.SUCCESS.code).send({
             status: 'success',
             message: httpStatus.SUCCESS.message,
-            // Sending data object containing users
-            data: { users },
+            data: { users }, // Sending data object containing users
         });
     } catch (error) {
         res.status(httpStatus.SERVICE_ERROR.code).send({
