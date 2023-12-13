@@ -13,3 +13,13 @@ Authorization:{{authorization_token}}
     "body": "The text of the new comment",
     "postId": "{{post_id}}"
 }
+
+### UPDATE THE COMMENT
+PUT {{base_url}}/comments/{{comment_id}}
+Content-Type: {{content_type}}
+Authorization:{{authorization_token}}
+
+{
+    "body": "Updated comment text"
+}
+

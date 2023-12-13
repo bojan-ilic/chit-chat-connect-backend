@@ -51,11 +51,11 @@ router.post(
  * @param {string} id - The ID of the comment to update
  * @middleware verifyToken - Ensures user authentication before updating the comment
  */
-// router.put(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/commentController/updateComment'),
-// );
+router.put(
+    '/:id',
+    verifyToken,
+    require('../controllers/commentController/updateComment'),
+);
 
 /**
  * @description Route to delete a specific comment by ID
