@@ -39,11 +39,11 @@ router.get(
  * @route POST /api/comments
  * @middleware verifyToken - Ensures user authentication before adding the comment
  */
-// router.post(
-//     '/',
-//     verifyToken,
-//     require('../controllers/commentController/addComment'),
-// );
+router.post(
+    '/',
+    verifyToken,
+    require('../controllers/commentController/addComment'),
+);
 
 /**
  * @description Route to update a specific comment by ID

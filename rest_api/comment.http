@@ -1,2 +1,12 @@
 ### GET ALL THE COMMENTS OF THE POST
 GET {{base_url}}/comments/all/{{post_id}}
+
+### ADD A NEW COMMENT
+POST {{base_url}}/comments
+Content-Type: {{content_type}}
+Authorization:{{authorization_token}}
+
+{
+    "body": "The text of the new comment",
+    "postId": "{{post_id}}"
+}
