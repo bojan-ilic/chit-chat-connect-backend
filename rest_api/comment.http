@@ -23,3 +23,7 @@ Authorization:{{authorization_token}}
     "body": "Updated comment text"
 }
 
+### DELETE THE COMMENT
+DELETE {{base_url}}/comments/{{comment_id}}
+Content-Type: {{content_type}}
+Authorization:{{authorization_token}}

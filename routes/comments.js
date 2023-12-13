@@ -63,11 +63,11 @@ router.put(
  * @param {string} id - The ID of the comment to delete
  * @middleware verifyToken - Ensures user authentication before deleting the comment
  */
-// router.delete(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/commentController/deleteComment'),
-// );
+router.delete(
+    '/:id',
+    verifyToken,
+    require('../controllers/commentController/deleteComment'),
+);
 
 /**
  * Exports the router for comment-related operations to enable its use throughout the application.
