@@ -1,6 +1,9 @@
 ### GET ALL THE COMMENTS OF THE POST
 GET {{base_url}}/comments/all/{{post_id}}
 
+### GET THE SINGLE COMMENT
+GET {{base_url}}/comments/{{comment_id}}
+
 ### ADD A NEW COMMENT
 POST {{base_url}}/comments
 Content-Type: {{content_type}}

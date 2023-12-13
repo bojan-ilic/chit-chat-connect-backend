@@ -29,10 +29,10 @@ router.get(
  * @route GET /api/comments/:id
  * @param {string} id - The ID of the comment to retrieve
  */
-// router.get(
-//     '/:id',
-//     require('../controllers/commentController/getSingleComment'),
-// );
+router.get(
+    '/:id',
+    require('../controllers/commentController/getSingleComment'),
+);
 
 /**
  * @description Route to add a new comment
