@@ -1,18 +1,20 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the Post Model module representing the schema and functionalities for posts
-const PostModel = require('../../models/postModel');
-
 // Import the Like Model module representing the schema and functionalities for likes
 const LikeModel = require('../../models/likeModel');
 
+// Import the PostModel module representing the schema and functionalities for posts
+const PostModel = require('../../models/postModel');
+
 /**
  * Controller function to remove an existing like from the database.
- * Checks if the like exists for the provided post ID and user ID.
- * If the like exists, removes it from the database.
+ * Checks if the provided post ID exists in the database and then checks if the like exists for the given post ID and user ID.
+ * If the post and like exist, it removes the like from the database.
+ *
  * @param {Object} req - The request object containing like details
  * @param {Object} res - The response object used to send success message or error message when removing like
+ * @returns {Object} - Returns a response indicating the success or failure of adding the like
  */
 const removeLike = async (req, res) => {
     try {
@@ -21,6 +23,18 @@ const removeLike = async (req, res) => {
 
         // Extracts the user ID (_id) from the token present in request locals and assigns it to 'userId'
         const { _id: userId } = req.locals;
+
+        // Check if the post exists in the database based on the postId
+        const existingPost = await PostModel.findById(postId);
+
+        // If the post doesn't exist, return an error response and prevent adding a like for a non-existent post
+        if (!existingPost) {
+            return res.status(httpStatus.NOT_FOUND.code).send({
+                status: 'error',
+                message: httpStatus.NOT_FOUND.message,
+                customMessage: 'Post not found. Cannot remove like.',
+            });
+        }
 
         // Deletes a like from the 'likes' collection based on the provided postId and userId criteria
         const result = await LikeModel.deleteOne({ postId, userId });

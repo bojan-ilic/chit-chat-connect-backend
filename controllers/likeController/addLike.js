@@ -4,10 +4,15 @@ const { httpStatus } = require('../../config/constants');
 // Import the Like Model module representing the schema and functionalities for likes
 const LikeModel = require('../../models/likeModel');
 
+// Import the PostModel module representing the schema and functionalities for posts
+const PostModel = require('../../models/postModel');
+
 /**
  * Controller function to add a new like to the database or proceed if the like already exists.
- * Checks if the like exists for the provided post ID and user ID.
+ * Checks if the provided post ID exists in the database. If the post exists,
+ * it proceeds to check if the like already exists for the user and post.
  * If the like exists, proceeds to the next middleware. If not, adds the like to the database.
+ *
  * @param {Object} req - The request object containing like details
  * @param {Object} res - The response object used to send success message or error message when adding like
  * @param {Function} next - The next middleware function in the route
@@ -20,6 +25,18 @@ const addLike = async (req, res, next) => {
 
         // Extracts the postId from request parameters representing the ID of the post for the like addition
         const { postId } = req.params;
+
+        // Check if the post exists in the database based on the postId
+        const existingPost = await PostModel.findById(postId);
+
+        // If the post doesn't exist, return an error response and prevent adding a like for a non-existent post
+        if (!existingPost) {
+            return res.status(httpStatus.NOT_FOUND.code).send({
+                status: 'error',
+                message: httpStatus.NOT_FOUND.message,
+                customMessage: 'Post not found. Cannot add like.',
+            });
+        }
 
         // Finds an existing like in the 'likes' collection using LikeModel and matching the provided postId and userId criteria
         const existingLike = await LikeModel.findOne({
