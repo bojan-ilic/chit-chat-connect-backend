@@ -1,0 +1,3 @@
+### ADD/REMOVE LIKE
+POST {{base_url}}/likes/addRemove/{{post_id}}
+Authorization: {{authorization_token}}

@@ -23,7 +23,7 @@ router.use('/posts', require('./posts'));
 router.use('/comments', require('./comments'));
 
 // Routes for managing likes on posts or comments
-// router.use('/likes', require('./likes'));
+router.use('/likes', require('./likes'));
 
 // Routes managing tags associated with posts
 // router.use('/tags', require('./tags'));
