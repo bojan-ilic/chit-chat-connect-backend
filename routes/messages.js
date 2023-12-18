@@ -8,15 +8,15 @@ const verifyToken = require('../middleware/verifyToken');
 const router = new Router();
 
 /**
- * @description Route to fetch all messages
+ * @description Route to fetch all messages related to the authenticated user
  * @route GET /api/messages
- * @middleware verifyToken - Ensures user authentication before fetching messages
+ * @middleware verifyToken - Ensures user authentication before fetching user-specific messages
  */
-// router.get(
-//     '/',
-//     verifyToken,
-//     require('../controllers/messageController/allMessages'),
-// );
+router.get(
+    '/',
+    verifyToken,
+    require('../controllers/messageController/getAllMessages'),
+);
 
 /**
  * @description Route to add a new message
@@ -32,7 +32,7 @@ router.post(
 
 /**
  * Exports the router for message-related operations to enable its use throughout the application.
- * Manages routes for adding messages to specific users and retrieving messages.
+ * Manages routes for adding messages to specific users and retrieving user-specific messages.
  * @module Routes/Messages
  */
 module.exports = router;
