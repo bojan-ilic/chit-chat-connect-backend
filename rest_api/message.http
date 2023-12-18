@@ -1,3 +1,8 @@
+### GET ALL MESSAGES
+GET {{base_url}}/messages
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
 ### ADD A NEW MESSAGE
 POST {{base_url}}/messages/addMessage/{{receiver_id}}
 Content-Type: {{content_type}}
