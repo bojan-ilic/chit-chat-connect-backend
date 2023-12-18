@@ -32,7 +32,7 @@ router.use('/likes', require('./likes'));
 router.use('/ads', require('./ads'));
 
 // Routes managing direct messages between users
-// router.use('/messages', require('./messages'));
+router.use('/messages', require('./messages'));
 
 /**
  * Exports the defined router instance to be used as the main API router.

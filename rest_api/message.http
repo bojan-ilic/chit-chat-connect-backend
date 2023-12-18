@@ -1,0 +1,8 @@
+### ADD A NEW MESSAGE
+POST {{base_url}}/messages/addMessage/{{receiver_id}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+    "message": "Example message text!!!"
+}
