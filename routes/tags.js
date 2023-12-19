@@ -25,7 +25,7 @@ router.get('/', require('../controllers/tagController/getAllTags'));
  * @route POST /api/tags
  * @middleware verifyToken - Ensures user authentication before adding the tag
  */
-// router.post('/', verifyToken, require('../controllers/tagController/addTag'));
+router.post('/', verifyToken, require('../controllers/tagController/addTag'));
 
 /**
  * @description Route to update a specific tag by ID

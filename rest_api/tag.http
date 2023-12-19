@@ -1,2 +1,11 @@
 ### GET ALL TAGS
 GET {{base_url}}/tags
+
+### ADD A NEW TAG
+POST {{base_url}}/tags
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+    "name": "TagName1"
+}
