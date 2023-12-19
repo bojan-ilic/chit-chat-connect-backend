@@ -1,0 +1,2 @@
+### GET ALL TAGS
+GET {{base_url}}/tags

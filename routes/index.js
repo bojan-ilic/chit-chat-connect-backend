@@ -26,7 +26,7 @@ router.use('/comments', require('./comments'));
 router.use('/likes', require('./likes'));
 
 // Routes managing tags associated with posts
-// router.use('/tags', require('./tags'));
+router.use('/tags', require('./tags'));
 
 // Routes handling advertisement-related operations
 router.use('/ads', require('./ads'));
