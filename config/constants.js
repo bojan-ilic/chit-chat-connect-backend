@@ -11,27 +11,28 @@ module.exports = {
         // Indicates that the server did not find the requested resource
         NOT_FOUND: {
             code: 404,
-            message: 'Resource not found',
+            message: 'The requested resource was not found',
         },
         // Indicates that the request could not be completed due to a conflict with the current state of the target resource
         EXIST: {
             code: 409,
-            message: 'Already exists',
+            message: 'Resource already exists',
         },
         // Indicates that the server understands the content type of the request entity but was unable to process the contained instructions
         INVALID_DATA: {
             code: 422,
-            message: 'Invalid data',
+            message:
+                'The request contains invalid data and cannot be processed',
         },
         // Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource
         TOKEN_EXPIRED: {
             code: 401,
-            message: 'Token has expired',
+            message: 'The authentication token has expired',
         },
         // Indicates that the server understood the request but refuses to authorize it
         NOT_HAVE_PERMISSION: {
             code: 403,
-            message: "You don't have permission",
+            message: 'Access denied: insufficient permissions',
         },
 
         /**
@@ -40,7 +41,7 @@ module.exports = {
         // Indicates successful completion of the request
         SUCCESS: {
             code: 200,
-            message: 'Success',
+            message: 'The request has been successfully processed',
         },
 
         /**
@@ -49,7 +50,7 @@ module.exports = {
         // Indicates that the server encountered an unexpected condition that prevented it from fulfilling the request
         SERVICE_ERROR: {
             code: 500,
-            message: 'Service error',
+            message: 'The server encountered an unexpected error',
         },
     },
 };
