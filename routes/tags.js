@@ -45,11 +45,11 @@ router.put(
  * @param {string} id - The ID of the tag to delete
  * @middleware verifyToken - Ensures user authentication before deleting the tag
  */
-// router.delete(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/tagController/deleteTag'),
-// );
+router.delete(
+    '/:id',
+    verifyToken,
+    require('../controllers/tagController/deleteTag'),
+);
 
 /**
  * Exports the router for tag-related operations to enable its use throughout the application.

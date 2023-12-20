@@ -19,3 +19,8 @@ Authorization: {{authorization_token}}
     "name": "TagNameUpdated"
 }
 
+### DELETE THE TAG
+DELETE {{base_url}}/tags/{{tag_id}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
