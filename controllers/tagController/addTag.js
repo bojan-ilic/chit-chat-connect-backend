@@ -6,14 +6,17 @@ const TagModel = require('../../models/tagModel');
 
 /**
  * Controller function to handle the addition of a new tag to the database.
- * @param {Object} req - The request object containing tag data ('name' property based on the structure defined in TagModel.js) intended for addition to the database.
- * @param {Object} res - The response object used to send success message or error message when adding a new tag.
- * @returns {Object} - Returns a response with the saved tag or an error message upon unsuccessful addition.
+ * @param {Object} req - The request object representing the incoming request and containing tag data ('name' and 'userId' properties based on the structure defined in TagModel.js) intended for addition to the database.
+ * @param {Object} res - The response object representing the server's response and used to send a success message or error message upon attempting to add a new tag to the database.
+ * @returns {Object} - Returns a response object representing the server's reply containing either the saved tag data in case of a successful addition or an error message upon an unsuccessful attempt to add the tag to the database.
  */
 const addTag = async (req, res) => {
     try {
         // Extracts the tag name from the request body according to the 'name' property in the TagModel schema
         const { name: tagName } = req.body;
+
+        // User ID from the token representing the logged-in user
+        const { _id: userId } = req.locals;
 
         // Check if the tag already exists in the database (case-insensitive)
         const existingTag = await TagModel.findOne({
@@ -30,8 +33,8 @@ const addTag = async (req, res) => {
             });
         }
 
-        // Create a new TagModel instance using the provided tag name
-        const newTag = new TagModel({ name: tagName });
+        // Create a new TagModel instance using the provided tag name and user ID
+        const newTag = new TagModel({ name: tagName, userId });
 
         // Save the newly created tag to the database using the TagModel schema
         const savedTag = await newTag.save();

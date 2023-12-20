@@ -9,3 +9,13 @@ Authorization: {{authorization_token}}
 {
     "name": "TagName1"
 }
+
+### UPDATE THE TAG BY ITS ID
+PUT {{base_url}}/tags/{{tag_id}}
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+    "name": "TagNameUpdated"
+}
+

@@ -8,6 +8,7 @@ const { Schema, model } = require('mongoose');
  */
 const TagSchema = new Schema({
     name: { type: String, required: true }, // Name of the tag
+    userId: { type: Schema.Types.ObjectId, required: true }, // ID of the user who created the tag
 });
 
 /**

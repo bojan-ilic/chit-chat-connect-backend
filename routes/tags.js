@@ -33,11 +33,11 @@ router.post('/', verifyToken, require('../controllers/tagController/addTag'));
  * @param {string} id - The ID of the tag to update
  * @middleware verifyToken - Ensures user authentication before updating the tag
  */
-// router.put(
-//     '/:id',
-//     verifyToken,
-//     require('../controllers/tagController/updateTag'),
-// );
+router.put(
+    '/:id',
+    verifyToken,
+    require('../controllers/tagController/updateTag'),
+);
 
 /**
  * @description Route to delete a specific tag by ID
