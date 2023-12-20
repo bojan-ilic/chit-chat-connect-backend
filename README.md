@@ -68,8 +68,8 @@ To get started, follow these steps:
 
 2.   **Install Dependencies:**
 
--   `cd chit-chat-connect-backend
-    npm install`
+-   `cd chit-chat-connect-backend`
+-   `npm install`
 
 
 3.  **Set Environment Variables:** Create a `.env` file in the root directory and add the necessary environment variables. You might reference `dotenv` documentation for details.
@@ -77,16 +77,15 @@ To get started, follow these steps:
 Available Scripts
 -----------------
 
--   **Start the Server:**
+**Start the Server:**
+
+-    `npm start`
 
 
--   `npm start`
+**Testing:**
 
 
--   **Testing:**
-
-
--   `npm test`
+- `npm test`
 
 API Routes
 ------
