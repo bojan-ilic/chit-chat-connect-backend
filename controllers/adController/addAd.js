@@ -8,47 +8,57 @@ const AdModel = require('../../models/adModel');
 const moment = require('moment/moment');
 
 /**
- * Controller function to add a new advertisement to the database.
- * Extracts necessary data from the request and creates a new ad using AdModel.
- * @param {Object} req - The request object containing advertisement details
- * @param {Object} res - The response object used to send success message or error message when adding advertisement
- * @returns {Object} - Returns a response with the saved advertisement or an error message
+ * Controller function to handle the addition of a new advertisement to the database.
+ * Extracts required data from the request object and creates a new ad using AdModel.
+ * @param {Object} req - The request object representing the incoming request and containing advertisement data for database addition.
+ * @param {Object} res - The response object representing the server's reply, used to send success message or error message when adding advertisement.
+ * @returns {Object} - Returns a response object representing the server's reply containing saved advertisement data in case of a successful addition or an error message upon an unsuccessful attempt to add the advertisement to the database.
  */
 const addAd = async (req, res) => {
     try {
-        // Extract user ID from the request locals
+        // Extract user ID from the token representing the logged-in user
         const { _id: userId } = req.locals;
 
         // Extracts advertisement details from the request body according to the AdModel schema
-        let { startDate, endDate, ...reqBody } = req.body;
+        let { title, startDate, endDate, ...reqBody } = req.body;
 
         // Format the start and end dates using Moment.js
         startDate = new Date(moment(startDate).format('YYYY-MM-DD'));
         endDate = new Date(moment(endDate).format('YYYY-MM-DD'));
 
-        // Creates a new advertisement using AdModel schema
-        const newAd = new AdModel({ ...reqBody, startDate, endDate, userId });
+        // Check if an ad with the same title already exists for this user
+        const existingAd = await AdModel.findOne({ title, userId });
+
+        if (existingAd) {
+            return res.status(httpStatus.EXIST.code).send({
+                status: 'error',
+                message: httpStatus.EXIST.message,
+                customMessage:
+                    'An advertisement with the same title already exists for this user.',
+            });
+        }
+
+        // Creates a new advertisement using AdModel schema, including all required fields explicitly
+        const newAd = new AdModel({
+            ...reqBody,
+            title,
+            startDate,
+            endDate,
+            userId,
+        });
 
         // Save the new advertisement to the database
         const saveAd = await newAd.save();
 
-        // Send the saved advertisement or an error message based on the result
-        if (saveAd) {
-            res.send({
-                status: 'success',
-                message: httpStatus.SUCCESS.message,
-                customMessage: 'Advertisement added successfully.',
-                data: saveAd,
-            });
-        } else {
-            res.status(httpStatus.SERVICE_ERROR.code).send({
-                status: 'error',
-                message: httpStatus.SERVICE_ERROR.message,
-                customMessage: 'Advertisement addition unsuccessful.',
-            });
-        }
+        // Send a success response after adding the advertisement to the database
+        res.send({
+            status: 'success',
+            message: httpStatus.SUCCESS.message,
+            customMessage: 'Advertisement added successfully.',
+            data: saveAd, // Include the advertisement data in the success response
+        });
     } catch (error) {
-        // Handling errors and sending appropriate error response
+        // Error handling and sending appropriate error response
         res.status(httpStatus.SERVICE_ERROR.code).send({
             status: 'error',
             message: httpStatus.SERVICE_ERROR.message,
