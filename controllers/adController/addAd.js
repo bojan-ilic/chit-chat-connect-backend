@@ -1,10 +1,10 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the AdModel module representing the schema and functionalities for advertisements
+// Import the AdModel Mongoose model for advertisements based on AdSchema
 const AdModel = require('../../models/adModel');
 
-// Importing Moment.js for date manipulation
+// Import Moment.js for date and time manipulation and formatting
 const moment = require('moment/moment');
 
 /**
@@ -15,17 +15,17 @@ const moment = require('moment/moment');
  * @returns {Object} - Returns a response with the saved advertisement or an error message
  */
 const addAd = async (req, res) => {
-    // Extract user ID from the request locals
-    const { _id: userId } = req.locals;
-
-    // Extracts advertisement details from the request body according to the AdModel schema
-    let { startDate, endDate, ...reqBody } = req.body;
-
-    // Format the start and end dates using Moment.js
-    startDate = new Date(moment(startDate).format('YYYY-MM-DD'));
-    endDate = new Date(moment(endDate).format('YYYY-MM-DD'));
-
     try {
+        // Extract user ID from the request locals
+        const { _id: userId } = req.locals;
+
+        // Extracts advertisement details from the request body according to the AdModel schema
+        let { startDate, endDate, ...reqBody } = req.body;
+
+        // Format the start and end dates using Moment.js
+        startDate = new Date(moment(startDate).format('YYYY-MM-DD'));
+        endDate = new Date(moment(endDate).format('YYYY-MM-DD'));
+
         // Creates a new advertisement using AdModel schema
         const newAd = new AdModel({ ...reqBody, startDate, endDate, userId });
 
