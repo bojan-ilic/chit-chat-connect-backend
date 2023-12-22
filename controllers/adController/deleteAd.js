@@ -6,6 +6,7 @@ const AdModel = require('../../models/adModel');
 
 /**
  * Controller function to delete an advertisement from the database.
+ * Manages the deletion process based on the provided ad ID and user permissions.
  * @param {Object} req - The request object representing the incoming request and containing the ad ID intended for deletion.
  * @param {Object} res - The response object representing the server's response and used to send a success message or error message upon attempting to delete an advertisement from the database.
  * @returns {Object} - Returns a response object representing the server's reply indicating either the success of the advertisement deletion operation or an error message upon an unsuccessful attempt to delete the advertisement from the database.
