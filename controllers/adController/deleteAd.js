@@ -1,25 +1,28 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the Advertisement Model module representing the schema and functionalities for advertisements
+// Import AdModel representing the Mongoose model for advertisements based on AdSchema
 const AdModel = require('../../models/adModel');
 
 /**
  * Controller function to delete an advertisement from the database.
- * @param {Object} req - The request object containing the ad ID in the URL parameters.
- * @param {Object} res - The response object used to send the success or error response for advertisement deletion.
- * @returns {Object} - Returns a response confirming the deletion or an error message.
+ * @param {Object} req - The request object representing the incoming request and containing the ad ID intended for deletion.
+ * @param {Object} res - The response object representing the server's response and used to send a success message or error message upon attempting to delete an advertisement from the database.
+ * @returns {Object} - Returns a response object representing the server's reply indicating either the success of the advertisement deletion operation or an error message upon an unsuccessful attempt to delete the advertisement from the database.
  */
 const deleteAd = async (req, res) => {
     try {
-        // Extract the advertisement ID from the request parameters
+        // Extract user data from the token representing the logged-in user
+        const loggedInUser = req.locals;
+
+        // Extract the advertisement ID from the request parameters with the alias 'adId'
         const { id: adId } = req.params;
 
-        // Find the advertisement by ID and remove it from the database
-        const deletedAd = await AdModel.findByIdAndDelete(adId);
+        // Find the advertisement by ID
+        const ad = await AdModel.findById(adId);
 
-        if (!deletedAd) {
-            // If the advertisement was not found
+        // Check if the advertisement exists
+        if (!ad) {
             return res.status(httpStatus.NOT_FOUND.code).send({
                 status: 'error',
                 message: httpStatus.NOT_FOUND.message,
@@ -27,15 +30,39 @@ const deleteAd = async (req, res) => {
             });
         }
 
-        // Respond with a success message upon successful deletion
-        res.status(httpStatus.SUCCESS.code).send({
-            status: 'success',
-            message: httpStatus.SUCCESS.message,
-            customMessage: 'Advertisement deleted successfully.',
-            deletedAd,
-        });
+        // Check user permission: Only the user who created the ad or an admin can delete it
+        if (
+            loggedInUser.role !== 'admin' &&
+            loggedInUser._id.toString() !== ad.userId.toString()
+        ) {
+            return res.status(httpStatus.NOT_HAVE_PERMISSION.code).send({
+                status: 'error',
+                message: httpStatus.NOT_HAVE_PERMISSION.message,
+                customMessage:
+                    "You don't have permission to delete this advertisement.",
+            });
+        }
+
+        // Delete the advertisement
+        const deletedAd = await AdModel.findByIdAndDelete(adId);
+
+        // Respond based on deletion status
+        if (deletedAd) {
+            res.status(httpStatus.SUCCESS.code).send({
+                status: 'success',
+                message: httpStatus.SUCCESS.message,
+                customMessage: 'Advertisement deleted successfully.',
+                deletedAd, // Include the deleted advertisement data in the success response
+            });
+        } else {
+            res.status(httpStatus.NOT_FOUND.code).send({
+                status: 'error',
+                message: httpStatus.NOT_FOUND.message,
+                customMessage: 'Advertisement not found or deletion failed.',
+            });
+        }
     } catch (error) {
-        // Handle errors during the deletion process
+        // Error handling and sending appropriate error response
         res.status(httpStatus.SERVICE_ERROR.code).send({
             status: 'error',
             message: httpStatus.SERVICE_ERROR.message,

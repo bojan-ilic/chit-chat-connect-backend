@@ -1,7 +1,7 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the AdModel Mongoose model for advertisements based on AdSchema
+// Import AdModel representing the Mongoose model for advertisements based on AdSchema
 const AdModel = require('../../models/adModel');
 
 // Import Moment.js for date and time manipulation and formatting
