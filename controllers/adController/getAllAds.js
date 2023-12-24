@@ -20,7 +20,7 @@ const moment = require('moment/moment');
 
 const getAllAds = async (req, res) => {
     try {
-        // Get the current date
+        // Retrieve and convert the current date into a Date object with 'YYYY-MM-DD' format using Moment.js
         const currentDate = new Date(moment().format('YYYY-MM-DD'));
 
         // Fetch advertisements based on date criteria and enriched data

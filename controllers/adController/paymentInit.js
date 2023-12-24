@@ -8,16 +8,15 @@ const { STRIPE_SK } = require('../../config/config');
 const stripe = require('stripe')(STRIPE_SK);
 
 /**
- * Initiates a payment using Stripe based on the provided request data.
- * @param {Object} req - The HTTP request object containing price and currency information in the body.
- * @param {Object} res - The HTTP response object used to send the client secret back to the client for payment confirmation.
- * @returns {Promise<void>} - Returns a promise that resolves when the payment initiation process is completed.
- * @throws {Object} -Throws an error if payment initiation fails, sending an appropriate error status and message.
- *
+ * Controller function to initialize a payment using Stripe.
+ * Initiates a transaction by creating a payment intent and returns client secret key for payment confirmation.
+ * @param {Object} req - The request object representing the incoming request and containing 'price' and 'currency' in its body for payment initiation.
+ * @param {Object} res - The response object representing the server's response, used to send success or error messages after payment initiation.
+ * @returns {Object} - Returns a response object representing the server's reply with the client secret for payment confirmation upon success or an error message if payment initiation fails.
  */
 const paymentInit = async (req, res) => {
     try {
-        // Destructuring 'price' and 'currency' from 'req.body'
+        // Extracts 'price' and 'currency' from the request body, required for Stripe payment initiation
         const { price, currency } = req.body;
 
         // Create payment intent using Stripe API to initialize a transaction
@@ -27,12 +26,12 @@ const paymentInit = async (req, res) => {
             automatic_payment_methods: { enabled: true }, // Enabling automatic payment methods if available
         });
 
-        // Successful response with client secret for payment confirmation
+        // Send a success response after confirming payment for further processing
         res.status(httpStatus.SUCCESS.code).send({
             status: 'success',
             message: httpStatus.SUCCESS.message,
             customMessage: 'Payment confirmed and ready for processing',
-            client_secret: paymentIntent.client_secret, // Sending the client secret back to the client for payment confirmation
+            client_secret: paymentIntent.client_secret, // Include the client secret key for payment confirmation in the success response
         });
     } catch (error) {
         // Error response if payment initiation fails
