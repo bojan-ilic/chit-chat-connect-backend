@@ -11,7 +11,7 @@ const moment = require('moment/moment');
  * Controller function to handle the addition of a new advertisement to the database.
  * Extracts required data from the request object and creates a new ad using AdModel.
  * @param {Object} req - The request object representing the incoming request and containing advertisement data for database addition.
- * @param {Object} res - The response object representing the server's reply, used to send success message or error message when adding advertisement.
+ * @param {Object} res - The response object representing the server's response, used to send success message or error message when adding advertisement.
  * @returns {Object} - Returns a response object representing the server's reply containing saved advertisement data in case of a successful addition or an error message upon an unsuccessful attempt to add the advertisement to the database.
  */
 const addAd = async (req, res) => {

@@ -13,7 +13,7 @@ const AdSchema = new Schema({
     price: { type: Number, required: true }, // Price of the advertised product/service
     userId: { type: Schema.Types.ObjectId, required: true }, // ID of the user who created the advertisement
     duration: { type: Number, required: true }, // Duration of the advertisement
-    startDate: { type: Date, default: () => new Date().getTime() }, // Start date of the advertisement
+    startDate: { type: Date, default: Date.now }, // Start date of the advertisement
     endDate: { type: Date, default: null }, // End date of the advertisement
 });
 
