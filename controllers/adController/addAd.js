@@ -19,7 +19,7 @@ const addAd = async (req, res) => {
         // Extract user ID from the token representing the logged-in user
         const { _id: userId } = req.locals;
 
-        // Extracts advertisement details from the request body according to the AdModel schema
+        // Extracts advertisement details from the request body according to the AdSchema
         let { title, startDate, endDate, ...reqBody } = req.body;
 
         // Format the start and end dates using Moment.js
