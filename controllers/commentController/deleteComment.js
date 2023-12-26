@@ -1,24 +1,26 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the CommentModel module representing the schema and functionalities for comments
+// Import the CommentModel representing the Mongoose model for comments based on CommentSchema
 const CommentModel = require('../../models/commentModel');
 
 /**
- * Controller function to delete a comment.
- * @param {Object} req - The request object containing the comment information to be deleted.
- * @param {Object} res - The response object used to send the deletion status or error message.
- * @returns {Object} - Returns an object response containing deletion status or error details.
+ * Controller function to handle the deletion of a comment from the database.
+ * Extracts comment data from the request object and performs deletion based on permissions.
+ * @param {Object} req - The request object representing the incoming request and containing comment information for deletion.
+ * @param {Object} res - The response object representing the server's response, used to send success or error messages after attempting comment deletion.
+ * @returns {Object} - Returns a response object indicating the server's reply, containing either successful deletion details or an error message upon an unsuccessful attempt to remove the comment from the database.
  */
+
 const deleteComment = async (req, res) => {
     try {
-        // User data from the token representing the logged-in user
+        // Extracts user details from the token representing the logged-in user
         const loggedInUser = req.locals;
 
-        // Extract 'id' from request parameters to get 'commentId'
+        // Extracts the comment ID from the request parameters with the alias 'commentId'
         const { id: commentId } = req.params;
 
-        // Retrieve the comment to get the user ID of the comment owner
+        // Find a comment in the database based on the provided comment ID
         const comment = await CommentModel.findById(commentId);
 
         // Check if the comment does not exist in the database
@@ -31,7 +33,7 @@ const deleteComment = async (req, res) => {
             });
         }
 
-        // Retrieve the ID of the user who created the comment based on the schema structure in commentModel.js
+        // Retrieve the ID of the user who created the comment based on the comment's user ID using CommentSchema
         const commentOwnerId = comment.user.id;
 
         // Declaration of a variable to hold the query conditions for deleting the comment
