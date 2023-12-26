@@ -1,22 +1,23 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import CommentModel module representing the schema and functionalities for comments
+// Import the CommentModel representing the Mongoose model for comments based on CommentSchema
 const CommentModel = require('../../models/commentModel');
 
 /**
- * Retrieves a single comment based on the provided ID.
- * @param {Object} req - The request object containing the ID of the comment to retrieve.
- * @param {Object} res - The response object used to send the comment data or error message.
- * @returns {Object} - Returns a response with the comment data or error message.
+ * Controller function to retrieve a single comment from the database based on the provided ID.
+ * Retrieves a comment associated with the specific ID from the comment collection.
+ * @param {Object} req - The request object representing the incoming request with the comment ID to be fetched.
+ * @param {Object} res - The response object representing the server's response used to send the retrieved comment data or error messages.
+ * @returns {Object} - Returns a response object representing the server's reply containing the fetched comment data or an error message.
  */
 const getSingleComment = async (req, res) => {
     try {
-        // Extracting the ID parameter from the request object
-        const { id } = req.params;
+        // Extract the comment ID from the request parameters with the alias 'commentId' to retrieve a specific comment
+        const { id: commentId } = req.params;
 
         // Finding a comment in the database with the given ID
-        const comment = await CommentModel.findOne({ _id: id });
+        const comment = await CommentModel.findOne({ _id: commentId });
 
         if (comment) {
             // If a comment was found, send a success response with the comment data
