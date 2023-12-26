@@ -1,7 +1,7 @@
-// Import the User model to interact with the database
-const UserModel = require('../../models/userModel.js');
+// Import UserModel representing the Mongoose model for users based on UserSchema
+const UserModel = require('../../models/userModel');
 
-// Import the bcrypt for password hashing
+// Import 'bcrypt' library for password hashing and comparison
 const bcrypt = require('bcrypt');
 
 // Import HTTP status codes and messages for response handling
@@ -11,47 +11,58 @@ const { httpStatus } = require('../../config/constants');
 const saltRounds = 10;
 
 /**
- * Handles user registration.
- * @function register
- * @param {Object} req - The request object containing user registration details.
- * @param {Object} res - The response object to send back appropriate responses.
- * @returns {Promise} -  A promise indicating the completion of the registration process.
- * @throws {Error} - Throws an error if the registration process encounters an issue.
+ * Controller function to handle user registration.
+ * Extracts user registration details from the request object and creates a new user using UserModel.
+ * @param {Object} req - The request object representing incoming registration data containing user details.
+ * @param {Object} res - The response object representing the server's response for user registration.
+ * @returns {Object} - Returns a response object representing the server's reply containing saved user data in case of a successful registration or an error message upon an unsuccessful attempt.
  */
 const register = async (req, res) => {
     try {
-        // Extract email and password from request body
+        // Extracts user login details (email and password) from the request body according to the UserSchema
         const { email, password } = req.body;
 
-        // Check if user with provided email already exists
+        // Check if user with provided email already exists in the database
         const userExists = await UserModel.exists({ email });
 
+        // Send error response if the user with the provided email already exists
         if (userExists) {
-            return res
-                .status(httpStatus.EXIST.code)
-                .send(httpStatus.EXIST.message);
+            return res.status(httpStatus.EXIST.code).send({
+                status: 'error',
+                message: httpStatus.EXIST.message,
+                customMessage:
+                    'A user with this email already exists. Please use a different email or try logging in.',
+            });
         }
 
-        // Hash the password
+        // Hash the user's password using bcrypt with a specified number of salt rounds
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // Create a new user with hashed password
+        // Create a new user instance with hashed password
         const newUser = new UserModel({
             ...req.body,
             password: hashedPassword,
         });
 
-        // Save the new user
+        // Save the new user instance to the database
         const savedUser = await newUser.save();
 
-        // Send the created user in the response
-        res.send(savedUser);
+        // Send a success response after saving the new user to the database
+        res.status(httpStatus.SUCCESS.code).send({
+            status: 'success',
+            message: httpStatus.SUCCESS.message,
+            customMessage: 'User registration successful.',
+            user: savedUser, // Include the saved user data in the success response
+        });
     } catch (error) {
-        // Handle errors
-        console.error('Registration error:', error);
-        res.status(httpStatus.SERVICE_ERROR.code).send(
-            httpStatus.SERVICE_ERROR.message,
-        );
+        // Error handling and sending appropriate error response
+        res.status(httpStatus.SERVICE_ERROR.code).send({
+            status: 'error',
+            message: httpStatus.SERVICE_ERROR.message,
+            customMessage:
+                'Server encountered an error during registration process.',
+            error: error.message,
+        });
     }
 };
 
