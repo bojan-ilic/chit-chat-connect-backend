@@ -1,31 +1,33 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
 /**
  * Controller function for deleting a post from the database.
- * @param {Object} req - The request object containing the post ID in params and user info in locals.
- * @param {Object} res - The response object for sending the HTTP response.
- * @returns {void}
+ * Extracts post ID from the request parameters and user info from request locals.
+ * @param {Object} req - The request object representing the incoming request and containing post ID in params and user info in locals.
+ * @param {Object} res - The response object representing the server's response, used to send success message or error message when deleting the post.
+ * @returns {Object} - Returns a response object representing the server's reply confirming the successful deletion of the post.
  */
+
 const deletePost = (req, res) => {
-    // Extracting the post ID from request parameters
+    // Extract post ID from request parameters with the alias 'post_id'
     const { id: post_id } = req.params;
 
-    // Accessing user information from the request locals
-    const user = req.locals;
+    // User data from the token representing the logged-in user
+    const loggedInUser = req.locals;
 
     // Creating a query object to target a post by its ID
     let query = { _id: post_id };
 
     // Checking if the user has admin privileges
-    let isAdmin = user.role === 'admin';
+    let isAdmin = loggedInUser.role === 'admin';
 
     // If the user is not an admin, modify the query to delete only if the user is the owner of the post
     if (!isAdmin) {
-        query = { $and: [{ _id: post_id }, { userId: user._id }] };
+        query = { $and: [{ _id: post_id }, { userId: loggedInUser._id }] };
     }
 
     // Initiating to delete the post from the database
@@ -50,9 +52,6 @@ const deletePost = (req, res) => {
             }
         })
         .catch((error) => {
-            // Log an error message along with the caught error while attempting to delete the post
-            console.error('Error while deleting post: ', error);
-
             // Send error response if there was an issue with the deletion process
             res.status(httpStatus.SERVICE_ERROR.code).send({
                 status: 'error',
