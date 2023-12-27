@@ -1,19 +1,20 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the MessageModel representing the schema and functionalities for messages
+// Import MessageModel representing Mongoose model for messages based on MessageSchema
 const MessageModel = require('../../models/messageModel');
 
 /**
  * Controller function to fetch all messages related to the authenticated user from the database.
- * @param {Object} req - The request object containing user details and used to retrieve user-specific messages.
- * @param {Object} res - The response object used to send the retrieved messages or error messages.
- * @returns {Object} - Returns a response with the list of user-specific messages or an error message.
+ * Extracts necessary data from the request and creates a new message using MessageModel.
+ * @param {Object} req - The request object representing the incoming request and containing user details for message retrieval.
+ * @param {Object} res - The response object representing the server's response, used to send retrieved messages or error messages.
+ * @returns {Object} - Returns a response object representing the server's reply containing the list of user-specific messages or an error message.
  */
 
 const getAllMessages = async (req, res) => {
     try {
-        // ID of the logged-in user obtained from the authentication token
+        // Extract user ID from the token representing the logged-in user with the alias 'loggedInUserID'
         const { _id: loggedInUserID } = req.locals;
 
         // Retrieve messages where the sender or receiver ID matches the logged-in user ID
