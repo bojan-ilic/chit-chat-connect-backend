@@ -1,10 +1,10 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the Like Model module representing the schema and functionalities for likes
+// Import LikeModel representing the Mongoose model for likes based on LikeSchema
 const LikeModel = require('../../models/likeModel');
 
-// Import the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
 /**
@@ -12,9 +12,9 @@ const PostModel = require('../../models/postModel');
  * Checks if the provided post ID exists in the database and then checks if the like exists for the given post ID and user ID.
  * If the post and like exist, it removes the like from the database.
  *
- * @param {Object} req - The request object containing like details
- * @param {Object} res - The response object used to send success message or error message when removing like
- * @returns {Object} - Returns a response indicating the success or failure of adding the like
+ * @param {Object} req - The request object representing the incoming request and containing like details for removal.
+ * @param {Object} res - The response object representing the server's response containing success or error messages upon removing the like.
+ * @returns {Object} - Returns a response object representing the server's reply indicating the success or failure of removing the like.
  */
 const removeLike = async (req, res) => {
     try {

@@ -1,10 +1,10 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the Like Model module representing the schema and functionalities for likes
+// Import LikeModel representing the Mongoose model for likes based on LikeSchema
 const LikeModel = require('../../models/likeModel');
 
-// Import the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
 /**
@@ -13,14 +13,14 @@ const PostModel = require('../../models/postModel');
  * it proceeds to check if the like already exists for the user and post.
  * If the like exists, proceeds to the next middleware. If not, adds the like to the database.
  *
- * @param {Object} req - The request object containing like details
- * @param {Object} res - The response object used to send success message or error message when adding like
- * @param {Function} next - The next middleware function in the route
- * @returns {Object} - Returns a response indicating the success or failure of adding the like
+ * @param {Object} req - The request object representing the incoming request and containing like details.
+ * @param {Object} res - The response object representing the server's response used to send success message or error message when adding like.
+ * @param {Function} next - The callback function used to pass control to the next middleware in the route.
+ * @returns {Object} - Returns a response object representing the server's reply indicating the success or failure of adding the like.
  */
 const addLike = async (req, res, next) => {
     try {
-        // Extract user ID (_id) and other user details from token present in request locals
+        // Extract user details (_id as loggedInUserId and other properties) from the token representing the logged-in user
         const { _id: loggedInUserId, ...loggedInUser } = req.locals;
 
         // Extracts the postId from request parameters representing the ID of the post for the like addition
@@ -51,8 +51,6 @@ const addLike = async (req, res, next) => {
 
         // If the like doesn't exist, create a newLike object
         const newLike = {
-            // Constructs a newLike object, aligning its properties with the LikeSchema in the LikeModel,
-            // incorporating details from loggedInUser (such as 'firstName', 'lastName') along with specific 'postId' and 'userId' values
             ...loggedInUser, // Copies details of the loggedInUser object into the newLike object
             userId: loggedInUserId, // Assigns the logged-in user's ID from the token to the userId field in newLike object
             postId, // Assigns the postId from the controller parameter to the newLike object
