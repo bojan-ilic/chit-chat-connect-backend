@@ -1,32 +1,40 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
-// Importing pre-defined pipeline stages for joining related collections (users, likes) to enrich post data
+// Import pre-defined pipeline stages for joining related collections (posts, users, likes) to enrich post data
 const {
     joinPostUser, // Joins user data with posts
     joinLikesPost, // Joins likes data with posts
 } = require('../../stages/joins');
 
 /**
- * Handles filtering posts based on provided tags.
- * @param {Object} req - The request object containing the information about the client request.
- * @param {Object} res - The response object used to send the response back to the client.
- * @return {Object} - Returns a response object with filtered posts or error messages.
+ * Controller function to filter posts based on provided tags.
+ * Constructs an aggregation pipeline using predefined stages to filter posts by tags, join user and likes data,
+ * and sends a response containing filtered posts or an error message.
+ * @param {Object} req - The request object representing the incoming request and containing tag information for post filtering.
+ * @param {Object} res - The response object representing the server's response, used to send filtered posts or error messages.
+ * @returns {Object} - Returns a response object representing the server's reply containing filtered posts in case of success or an error message upon unsuccessful filtering.
  */
+
 const filterPosts = async (req, res) => {
     try {
+        // Destructure the 'tags' property from the request's query parameters
         const { tags } = req.query;
+
+        // Initialize an empty array to store conditions for filtering posts based on tags
         let query = [];
 
         // Constructing the query based on the type of 'tags' parameter received in the request
         if (typeof tags === 'string') {
+            // If 'tags' is a string, create a single matching condition for the aggregation pipeline
             query = [{ $match: { 'tags.name': tags } }];
         } else {
+            // If 'tags' is an array, create multiple matching conditions for each tag in the array
             tags.forEach((tag) => {
-                query.push({ $match: { 'tags.name': tag } });
+                query.push({ $match: { 'tags.name': tag } }); // Filters posts where the 'tags.name' matches the current 'tag' value
             });
         }
 
@@ -55,10 +63,10 @@ const filterPosts = async (req, res) => {
             status: 'success',
             message: httpStatus.SUCCESS.message,
             customMessage: 'Posts filtered successfully.',
-            data: { posts },
+            data: { posts }, // Include the filtered posts in the success response
         });
     } catch (error) {
-        // Handling errors and sending error response
+        // Error handling and sending appropriate error response
         console.error('Error in filtering posts:', error);
         res.status(httpStatus.SERVICE_ERROR.code).send({
             status: 'error',
