@@ -1,10 +1,10 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
-// Importing pre-defined pipeline stages for joining related collections (users, comments, likes) to enrich post data
+// Import pre-defined pipeline stages for joining related collections (users, posts, comments, likes) to enrich post data
 const {
     joinPostUser, // Joins user data with posts
     joinCommentsPost, // Joins comments data with posts
@@ -12,23 +12,25 @@ const {
 } = require('../../stages/joins');
 
 /**
- * Retrieves a single post based on the provided ID.
- * @param {Object} req - The request object containing the ID of the post to retrieve.
- * @param {Object} res - The response object used to send the post data or error message.
- * @returns {Object} - Returns a response with the post data or error message.
+ * Controller function to retrieve a single post based on the provided ID.
+ * Fetches a post using the ID from the request object and enriches its data by joining related collections.
+ * @param {Object} req - The request object representing the ID of the post to retrieve.
+ * @param {Object} res - The response object representing the server's response used to send the post data or error message.
+ * @returns {Object} - Returns a response object representing the server's reply with the post data or error message.
  */
+
 const getSinglePost = async (req, res) => {
     try {
-        // Extracting the ID parameter from the request object
+        // Extract the ID parameter from the request object
         const { id } = req.params;
 
-        // Constructing an aggregation pipeline to retrieve a single post and enrich its data
+        // Construct an aggregation pipeline to retrieve a single post and enrich its data
         let pipeline = [
             {
-                // Matching the provided ID by converting it to an ObjectId
+                // Match the provided ID by converting it to an ObjectId
                 $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } },
             },
-            // Enriching the post data by joining associated collections
+            // Enrich the post data by joining associated collections
             ...joinPostUser, // Adding stage to join user data
             ...joinCommentsPost, // Adding stage to join comments data
             ...joinLikesPost, // Adding stage to join likes data
