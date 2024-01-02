@@ -1,21 +1,24 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
 /**
- * Handles updating a specific post based on user permissions.
- * @param {Object} req - The request object containing information about the client request.
- * @param {Object} res - The response object used to send the response back to the client.
+ * Controller function to handle updating a specific post based on user permissions.
+ * Extracts necessary data from the request object and updates a post using PostModel.
+ * @param {Object} req - The request object representing the incoming request and containing post data for database update.
+ * @param {Object} res - The response object representing the server's response, used to send success message or error message when updating the post.
+ * @returns {Object} - Returns a response object representing the server's reply containing updated post data in case of a successful update or an error message upon an unsuccessful attempt to update the post in the database.
  */
+
 const updatePost = async (req, res) => {
     try {
-        // Extracting user information from request locals
-        const user = req.locals;
+        // Extract user data from the token representing the logged-in user
+        const loggedInUser = req.locals;
 
-        // Extracting post ID from request parameters
-        const postId = req.params.id;
+        // Extract the post ID from request parameters with the alias 'postId'
+        const { id: postId } = req.params;
 
         // Fetching the post by ID to get the userId associated with it
         const post = await PostModel.findById(postId);
@@ -32,8 +35,8 @@ const updatePost = async (req, res) => {
 
         // Checking user roles and permissions
         if (
-            user.role === 'admin' ||
-            user._id.toString() === post.userId.toString()
+            loggedInUser.role === 'admin' ||
+            loggedInUser._id.toString() === post.userId.toString()
         ) {
             // Users can update their own posts or admins can update any post
             const { body, title, image, isPublic, tags } = req.body;
