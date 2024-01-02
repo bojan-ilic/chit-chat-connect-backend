@@ -1,17 +1,23 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
-// Importing pre-defined pipeline stages for joining related collections (users, likes) to enrich post data
-const { joinPostUser, joinLikesPost } = require('../../stages/joins');
+// Import pre-defined pipeline stages for joining related collections (posts, users, likes) to enrich post data
+const {
+    joinPostUser, // Joins user data with posts
+    joinLikesPost, // Joins likes data with posts
+} = require('../../stages/joins');
 
 /**
- * Handles the retrieval of all posts.
- * @param {Object} req - The request object containing the information about the client request.
- * @param {Object} res -  The response object used to send the response back to the client.
+ * Controller function to handle the retrieval of all posts based on specified criteria.
+ * Retrieves posts from the database according to query parameters like 'limit', 'page', and 'isPublic'.
+ * @param {Object} req - The request object representing the incoming request and containing query parameters for post retrieval.
+ * @param {Object} res - The response object representing the server's response, used to send retrieved posts or error messages when fetching posts.
+ * @returns {Object} - Returns a response object representing the server's reply containing retrieved posts and related count in case of successful retrieval or an error message upon an unsuccessful attempt to retrieve posts.
  */
+
 const getAllPosts = async (req, res) => {
     // Extracting the 'limit' query parameter from the request object, parsing it to an integer, or assigning 'null' if undefined
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
@@ -52,18 +58,29 @@ const getAllPosts = async (req, res) => {
             ...joinLikesPost,
             ...joinPostUser,
         ]);
+
+        if (posts.length === 0) {
+            // Send a specific response when no posts are found
+            return res.status(httpStatus.NOT_FOUND.code).send({
+                status: 'success',
+                message: 'No posts match the specified criteria',
+                data: { posts: [], count: 0 },
+            });
+        }
+
         // Sending response with retrieved posts and count
         res.status(httpStatus.SUCCESS.code).send({
             status: 'success',
             message: httpStatus.SUCCESS.message,
-            // Sending data object containing posts and count
-            data: { posts, count },
+            data: { posts, count }, // Sending data object containing posts and count
         });
     } catch (error) {
+        // Error handling and sending appropriate error response
         res.status(httpStatus.SERVICE_ERROR.code).send({
             status: 'error',
             message: httpStatus.SERVICE_ERROR.message,
-            customMessage: 'Internal Server Error',
+            customMessage:
+                'Server encountered an issue while retrieving posts.',
             error: error.message,
         });
     }
