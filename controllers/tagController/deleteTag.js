@@ -1,7 +1,7 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the TagModel module representing the schema and functionalities for tags
+// Import the TagModel representing the Mongoose model for tags based on TagSchema
 const TagModel = require('../../models/tagModel');
 
 /**

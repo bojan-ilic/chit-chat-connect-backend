@@ -1,15 +1,17 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Import the TagModel representing the schema and functionalities for tags
+// Import the TagModel representing the Mongoose model for tags based on TagSchema
 const TagModel = require('../../models/tagModel');
 
 /**
  * Controller function to handle the addition of a new tag to the database.
+ * Extracts required data from the request object and creates a new tag using TagModel.
  * @param {Object} req - The request object representing the incoming request and containing tag data ('name' and 'userId' properties based on the structure defined in TagModel.js) intended for addition to the database.
  * @param {Object} res - The response object representing the server's response and used to send a success message or error message upon attempting to add a new tag to the database.
  * @returns {Object} - Returns a response object representing the server's reply containing either the saved tag data in case of a successful addition or an error message upon an unsuccessful attempt to add the tag to the database.
  */
+
 const addTag = async (req, res) => {
     try {
         // Extracts the tag name from the request body according to the 'name' property in the TagModel schema
