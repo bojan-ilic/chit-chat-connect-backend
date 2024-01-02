@@ -1,24 +1,26 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the PostModel module representing the schema and functionalities for posts
+// Import PostModel representing the Mongoose model for posts based on PostSchema
 const PostModel = require('../../models/postModel');
 
-// Importing pre-defined pipeline stages for joining related collections (users, likes) to enrich post data
+// Import pre-defined pipeline stages for joining related collections (posts, users, likes) to enrich post data
 const {
     joinPostUser, // Joins user data with posts
     joinLikesPost, // Joins likes data with posts
 } = require('../../stages/joins');
 
 /**
- * Handles searching posts based on a provided search query.
- * @param {Object} req - The request object containing query parameters.
- * @param {Object} res - The response object for sending the search results.
- * @returns {Object} - Returns posts matching the search query or an error response.
+ * Controller function to handle searching posts based on a provided search query.
+ * Extracts the search query from the request object and searches for posts matching the query in titles or bodies.
+ * @param {Object} req - The request object representing the incoming request and containing query parameters for post search.
+ * @param {Object} res - The response object representing the server's response used to send matched posts or error response.
+ * @returns {Object} - Returns a response object representing the server's reply containing posts matching the search query or an error message.
  */
+
 const searchPost = async (req, res) => {
     try {
-        // Extracting the 'searchQuery' from the query parameters
+        // Extract the 'searchQuery' from the query parameters
         const { searchQuery } = req.query;
 
         // If 'searchQuery' is not provided or empty, return an invalid data error response
