@@ -1,15 +1,17 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the UserModel module representing the schema and functionalities for users
+// Import the UserModel representing the Mongoose model for users based on UserSchema
 const UserModel = require('../../models/userModel');
 
 /**
  * Controller function to delete a user.
- * @param {Object} req - The request object containing user deletion information.
- * @param {Object} res - The response object used to send the deletion success or error message.
- * @returns {Object} - Returns a response with the deletion status message or error.
+ * Handles the deletion of a user profile based on user ID and user role permissions.
+ * @param {Object} req - The request object representing the incoming request containing user deletion information.
+ * @param {Object} res - The response object representing the server's response used to send the deletion success or error message.
+ * @returns {Object} - Returns a response object representing the server's reply with the deletion status message or error.
  */
+
 const deleteUser = async (req, res) => {
     try {
         // Extracts role and user ID from the request's local data

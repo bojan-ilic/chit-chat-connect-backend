@@ -1,15 +1,16 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the UserModel module representing the schema and functionalities for users
+// Import the UserModel representing the Mongoose model for users based on UserSchema
 const UserModel = require('../../models/userModel');
 
 /**
  * Controller function to add a new user.
- * @param {Object} req - The request object containing user information for registration.
- * @param {Object} res - The response object used to send the success message or registration error.
- * @returns {Object} - Returns a response with the status, message, and potentially user data if successful.
+ * @param {Object} req - The request object representing the incoming request and containing user information for registration.
+ * @param {Object} res - The response object representing the server's response and used to send a success message or error message upon attempting to add a new user to the database.
+ * @returns {Object} - Returns a response object representing the server's reply containing either the saved user data in case of a successful addition or an error message upon an unsuccessful attempt to add the user to the database.
  */
+
 const addUser = async (req, res) => {
     try {
         // Extract user data from the request body

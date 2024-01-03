@@ -1,15 +1,18 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the UserModel module representing the schema and functionalities for users
+// Import the UserModel representing the Mongoose model for users based on UserSchema
 const UserModel = require('../../models/userModel');
 
 /**
  * Controller function to update a user's information.
- * @param {Object} req - The request object containing the user information to be updated.
- * @param {Object} res - The response object used to send the updated user information or error message.
- * @returns {Object} - Returns a response with the updated user information or error status.
+ * Handles the modification of user profile data based on user ID.
+ * Admins can modify any user's data; regular users can only update their own profile.
+ * @param {Object} req - The request object representing the incoming request containing the user ID and updated information.
+ * @param {Object} res - The response object representing the server's response, used to send the updated user information or error message.
+ * @returns {Object} - Returns a response object representing the server's reply containing the updated user data or an error message indicating the status.
  */
+
 const updateUser = async (req, res) => {
     try {
         // User data from the token representing the logged-in user
@@ -67,7 +70,6 @@ const updateUser = async (req, res) => {
             });
         }
     } catch (error) {
-        console.error('An error occurred while updating user:', error);
         res.status(httpStatus.SERVICE_ERROR.code).send({
             status: 'error',
             message: httpStatus.SERVICE_ERROR.message,

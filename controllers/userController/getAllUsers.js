@@ -1,20 +1,31 @@
 // Import HTTP status codes and messages for response handling
 const { httpStatus } = require('../../config/constants');
 
-// Importing the UserModel module representing the schema and functionalities for users
+// Import the UserModel representing the Mongoose model for users based on UserSchema
 const UserModel = require('../../models/userModel');
 
 /**
  * Controller function to retrieve all users from the database.
- * @param {Object} req - The request object containing details of the GET all users request.
- * @param {Object} res - The response object used to send the retrieved users or error messages.
- * @returns {Object} Returns a response with the list of users or an error message.
+ * Handles the retrieval of all user profiles stored in the database.
+ * @param {Object} req - The request object representing the incoming request containing details of the GET all users request.
+ * @param {Object} res - The response object representing the server's response used to send the retrieved users or error messages.
+ * @returns {Object} Returns a response object representing the server's reply with the list of users or an error message.
  */
 
 const getAllUsers = async (req, res) => {
     try {
         // Fetching all users from the UserModel
         const users = await UserModel.find({});
+
+        // Check if there are no users found in the database
+        if (users.length === 0) {
+            res.status(httpStatus.NOT_FOUND.code).send({
+                status: 'success',
+                message: httpStatus.NOT_FOUND.message,
+                customMessage: 'No users were found.',
+                data: [], // Sending an empty array when there are no users
+            });
+        }
 
         // Sending response with retrieved users
         res.status(httpStatus.SUCCESS.code).send({
@@ -26,7 +37,8 @@ const getAllUsers = async (req, res) => {
         res.status(httpStatus.SERVICE_ERROR.code).send({
             status: 'error',
             message: httpStatus.SERVICE_ERROR.message,
-            customMessage: 'Internal Server Error',
+            customMessage:
+                'Error occurred while fetching all users from the database.',
             error: error.message,
         });
     }
