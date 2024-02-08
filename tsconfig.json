@@ -1,0 +1,50 @@
+{
+	/**
+	 * TypeScript Configuration File for the Backend of a ChitChatConnect App.
+	 *
+	 * This configuration file specifies compiler options and file inclusion/exclusion patterns
+	 * for TypeScript, allowing developers to write and compile server-side code using TypeScript.
+	 *
+	 */
+
+	// Compiler Options
+	"compilerOptions":{
+		// Target ECMAScript version
+		"target":"es6",
+		// Module system for code generation
+		"module":"commonjs",
+		// Module resolution strategy
+		"moduleResolution":"node",
+		// Enable strict mode (recommended for better type checking)
+		"strict":true,
+		// Allow default imports from CommonJS modules
+		"esModuleInterop":true,
+		// Skip type checking of declaration files
+		"skipLibCheck":true,
+		// Enforce consistent casing in file names
+		"forceConsistentCasingInFileNames":true,
+		// Allow importing JSON files as modules
+		"resolveJsonModule":true,
+		// Base URL for non-relative module names
+		"baseUrl":".",
+		// Specify the output directory for compiled files
+		"outDir":"./dist",
+		// Specify the root directory for TypeScript source files
+		"rootDir":"./backend",
+		// Enable strict null checks for safer code
+		"strictNullChecks":true,
+		// Include types for Node.js runtime
+		"types":[
+			"node"
+		]
+	},
+	// Include patterns for TypeScript source files
+	"include":[
+		"backend/**/*.ts"
+	],
+	// Exclude patterns for files or directories to be ignored during compilation
+	"exclude":[
+		"node_modules",
+		"dist"
+	]
+}
