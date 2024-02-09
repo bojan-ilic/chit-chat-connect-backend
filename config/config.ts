@@ -4,6 +4,8 @@
  * @module config
  */
 
+import {CorsOptions} from 'cors';
+
 require('dotenv').config();
 
 /**
@@ -11,9 +13,9 @@ require('dotenv').config();
  * @type {string[]}
  */
 const whiteList = [
-    // 'https://api.production-domain.com', // Production
-    'http://localhost:3000', // Development: Frontend URL
-    `http://localhost:${process.env.PORT}`, // Development: Backend URL
+	// 'https://api.production-domain.com', // Production
+	'http://localhost:3000', // Development: Frontend URL
+	`http://localhost:${process.env.PORT}` // Development: Backend URL
 ];
 
 /**
@@ -29,73 +31,87 @@ const whiteList = [
  * @property {Function} CORS_OPTIONS.origin - Function to determine if the request origin is allowed.
  */
 
+export interface ConfigOptions {
+	PORT: number;
+	DB_USERNAME: string;
+	DB_PASSWORD: string;
+	DB_URL: string;
+	DEV_APP_NAME: string;
+	PROD_APP_NAME: string;
+	JWT_KEY: string;
+	STRIPE_SK: string;
+	CORS_OPTIONS: CorsOptions;
+}
+
 /**
  * Configuration settings exported from the configuration module.
  * @type {ConfigOptions}
  */
-module.exports = {
-    /**
-     * Port for the server to listen on.
-     * @type {number}
-     */
-    PORT: process.env.PORT,
+const config: ConfigOptions = {
+	/**
+	 * Port for the server to listen on.
+	 * @type {number}
+	 */
+	PORT: parseInt(process.env.PORT as string, 10),
 
-    /**
-     * Database username.
-     * @type {string}
-     */
-    DB_USERNAME: process.env.DB_USERNAME,
+	/**
+	 * Database username.
+	 * @type {string}
+	 */
+	DB_USERNAME: process.env.DB_USERNAME as string,
 
-    /**
-     * Database password.
-     * @type {string}
-     */
-    DB_PASSWORD: process.env.DB_PASSWORD,
+	/**
+	 * Database password.
+	 * @type {string}
+	 */
+	DB_PASSWORD: process.env.DB_PASSWORD as string,
 
-    /**
-     * Database connection URL.
-     * @type {string}
-     */
-    DB_URL: process.env.DB_URL,
+	/**
+	 * Database connection URL.
+	 * @type {string}
+	 */
+	DB_URL: process.env.DB_URL as string,
 
-    /**
-     * Development application name.
-     * @type {string}
-     */
-    DEV_APP_NAME: process.env.DEV_APP_NAME,
+	/**
+	 * Development application name.
+	 * @type {string}
+	 */
+	DEV_APP_NAME: process.env.DEV_APP_NAME as string,
 
-    /**
-     * Production application name.
-     * @type {string}
-     */
-    PROD_APP_NAME: process.env.PROD_APP_NAME,
+	/**
+	 * Production application name.
+	 * @type {string}
+	 */
+	PROD_APP_NAME: process.env.PROD_APP_NAME as string,
 
-    /**
-     * JWT key for authentication.
-     * @type {string}
-     */
-    JWT_KEY: process.env.JWT_KEY,
+	/**
+	 * JWT key for authentication.
+	 * @type {string}
+	 */
+	JWT_KEY: process.env.JWT_KEY as string,
 
-    /**
-     * Stripe secret key for payment processing.
-     * @type {string}
-     */
-    STRIPE_SK: process.env.STRIPE_SK,
+	/**
+	 * Stripe secret key for payment processing.
+	 * @type {string}
+	 */
+	STRIPE_SK: process.env.STRIPE_SK as string,
 
-    /**
-     *  CORS options for allowing cross-origin requests.
-     *  @type {Object}
-     *  @property {Function} origin - Function to determine if the request origin is allowed.
-     */
-    CORS_OPTIONS: {
-        origin: (origin, callback) => {
-            if (!origin || whiteList.includes(origin)) {
-                // If the request origin is in the whitelist or is absent (local request)
-                callback(null, true);
-            } else {
-                // If the request origin is not allowed
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
-    },
+	/**
+	 *  CORS options for allowing cross-origin requests.
+	 *  @type {Object}
+	 *  @property {Function} origin - Function to determine if the request origin is allowed.
+	 */
+	CORS_OPTIONS: {
+		origin: (origin, callback) => {
+			if (!origin || whiteList.includes(origin)) {
+				// If the request origin is in the whitelist or is absent (local request)
+				callback(null, true);
+			} else {
+				// If the request origin is not allowed
+				callback(new Error('Not allowed by CORS'));
+			}
+		}
+	}
 };
+
+export default config;

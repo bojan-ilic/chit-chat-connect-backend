@@ -1,11 +1,11 @@
-// Import the Router module from Express
-const { Router } = require('express');
+// Import Express Router for defining API routes
+import {Router} from 'express';
 
 // Import the token verification middleware
-const verifyToken = require('../middleware/verifyToken');
+import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = new Router();
+const router = Router();
 
 /**
  * Routes for managing user-related operations.
@@ -34,15 +34,15 @@ router.get('/:id', require('../controllers/userController/getSingleUser'));
 router.post('/', require('../controllers/userController/addUser'));
 
 /**
- * @description Route to update a specific user by IDBCursor
+ * @description Route to update a specific user by ID
  * @route PUT /api/users/:id
  * @param {string} id - The ID of the user to update
  * @middleware verifyToken - Ensures user authentication before updating the user
  */
 router.put(
-    '/:id',
-    verifyToken,
-    require('../controllers/userController/updateUser'),
+	'/:id',
+	verifyToken,
+	require('../controllers/userController/updateUser')
 );
 
 /**
@@ -52,13 +52,13 @@ router.put(
  * @middleware verifyToken - Ensures user authentication before deleting the user
  */
 router.delete(
-    '/:id',
-    verifyToken,
-    require('../controllers/userController/deleteUser'),
+	'/:id',
+	verifyToken,
+	require('../controllers/userController/deleteUser')
 );
 
 /**
  * Exports the router for user-related operations to enable its use throughout the application.
  * @module Routes/Users
  */
-module.exports = router;
+export default router;
