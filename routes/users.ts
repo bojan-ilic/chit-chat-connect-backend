@@ -1,11 +1,11 @@
-// Import Express Router for defining API routes
+// Import the Router type from the 'express' module for handling routes
 import {Router} from 'express';
 
 // Import the token verification middleware
 import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = Router();
+const router: Router = Router();
 
 /**
  * Routes for managing user-related operations.
@@ -58,7 +58,10 @@ router.delete(
 );
 
 /**
+ * Express Router instance for user-related operations.
  * Exports the router for user-related operations to enable its use throughout the application.
+ * Responsible for defining and handling API routes related to users.
+ * @type {express.Router}
  * @module Routes/Users
  */
 export default router;
