@@ -1,11 +1,11 @@
-// Import the Router module from Express
-const { Router } = require('express');
+// Import the Router type from the 'express' module for handling routes
+import {Router} from 'express';
 
 // Import the token verification middleware
-const verifyToken = require('../middleware/verifyToken');
+import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = new Router();
+const router: Router = Router();
 
 /**
  * Routes for managing tag-related operations.
@@ -34,9 +34,9 @@ router.post('/', verifyToken, require('../controllers/tagController/addTag'));
  * @middleware verifyToken - Ensures user authentication before updating the tag
  */
 router.put(
-    '/:id',
-    verifyToken,
-    require('../controllers/tagController/updateTag'),
+	'/:id',
+	verifyToken,
+	require('../controllers/tagController/updateTag')
 );
 
 /**
@@ -46,13 +46,16 @@ router.put(
  * @middleware verifyToken - Ensures user authentication before deleting the tag
  */
 router.delete(
-    '/:id',
-    verifyToken,
-    require('../controllers/tagController/deleteTag'),
+	'/:id',
+	verifyToken,
+	require('../controllers/tagController/deleteTag')
 );
 
 /**
+ * Express Router instance for tag-related operations.
  * Exports the router for tag-related operations to enable its use throughout the application.
+ * Responsible for defining and handling API routes related to tags.
+ * @type {express.Router}
  * @module Routes/Tags
  */
-module.exports = router;
+export default router;
