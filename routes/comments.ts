@@ -1,11 +1,11 @@
-// Import the Router module from Express
-const { Router } = require('express');
+// Import the Router type from the 'express' module for handling routes
+import {Router} from 'express';
 
 // Import the token verification middleware
-const verifyToken = require('../middleware/verifyToken');
+import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = new Router();
+const router = Router();
 
 /**
  * Routes for managing comment-related operations.
@@ -20,8 +20,8 @@ const router = new Router();
  * @param {string} postId - The ID of the post to retrieve comments for
  */
 router.get(
-    '/all/:postId',
-    require('../controllers/commentController/getAllCommentsForPost'),
+	'/all/:postId',
+	require('../controllers/commentController/getAllCommentsForPost')
 );
 
 /**
@@ -30,8 +30,8 @@ router.get(
  * @param {string} id - The ID of the comment to retrieve
  */
 router.get(
-    '/:id',
-    require('../controllers/commentController/getSingleComment'),
+	'/:id',
+	require('../controllers/commentController/getSingleComment')
 );
 
 /**
@@ -40,9 +40,9 @@ router.get(
  * @middleware verifyToken - Ensures user authentication before adding the comment
  */
 router.post(
-    '/',
-    verifyToken,
-    require('../controllers/commentController/addComment'),
+	'/',
+	verifyToken,
+	require('../controllers/commentController/addComment')
 );
 
 /**
@@ -52,9 +52,9 @@ router.post(
  * @middleware verifyToken - Ensures user authentication before updating the comment
  */
 router.put(
-    '/:id',
-    verifyToken,
-    require('../controllers/commentController/updateComment'),
+	'/:id',
+	verifyToken,
+	require('../controllers/commentController/updateComment')
 );
 
 /**
@@ -64,13 +64,16 @@ router.put(
  * @middleware verifyToken - Ensures user authentication before deleting the comment
  */
 router.delete(
-    '/:id',
-    verifyToken,
-    require('../controllers/commentController/deleteComment'),
+	'/:id',
+	verifyToken,
+	require('../controllers/commentController/deleteComment')
 );
 
 /**
+ * Express Router instance for comment-related operations.
  * Exports the router for comment-related operations to enable its use throughout the application.
+ * Responsible for defining and handling API routes related to comments.
+ * @type {express.Router}
  * @module Routes/Comments
  */
-module.exports = router;
+export default router;

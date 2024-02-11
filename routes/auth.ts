@@ -1,4 +1,4 @@
-// Import the Router module from Express for handling routes
+// Import the Router type from the 'express' module for handling routes
 import {Router} from 'express';
 
 // Create a new instance of the Express router

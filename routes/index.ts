@@ -7,7 +7,7 @@
 // Import the entire Express framework and name it 'express' to ensure compatibility with 'esModuleInterop' flag in tsconfig.json for default imports
 import * as express from 'express';
 
-// Import the Router type from the 'express' module
+// Import the Router type from the 'express' module for handling routes
 import {Router} from 'express';
 
 // Create a new instance of Express router
