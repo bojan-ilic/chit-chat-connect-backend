@@ -1,18 +1,25 @@
-// Importing the Router module from Express for handling routes
-const { Router } = require('express');
+// Import the Router module from Express for handling routes
+import {Router} from 'express';
 
-// Creating a new instance of the Router class
-const router = new Router();
+// Create a new instance of the Express router
+const router: Router = Router();
 
 /**
- * @route 	POST /api/auth/register
- * @desc 	Register a new user
+ * Routes for managing user authentication operations.
+ * Handles user registration and login.
+ * Base URL: /api/auth
+ * @module Routes/Auth
+ */
+
+/**
+ * @description Register a new user
+ * @route POST /api/auth/register
  */
 router.post('/register', require('../controllers/authController/register'));
 
 /**
+ * @description Route to log in an existing user
  * @route	POST /api/auth/login
- * @desc	Login an existing user
  */
 router.post('/login', require('../controllers/authController/login'));
 
@@ -22,4 +29,4 @@ router.post('/login', require('../controllers/authController/login'));
  * @type {express.Router}
  * @module auth
  */
-module.exports = router;
+export default router;
