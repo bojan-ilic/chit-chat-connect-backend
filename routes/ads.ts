@@ -1,11 +1,11 @@
 // Import the Router module from Express
-const { Router } = require('express');
+import {Router} from 'express';
 
 // Import the token verification middleware
-const verifyToken = require('../middleware/verifyToken');
+import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = new Router();
+const router: Router = Router();
 
 /**
  * Routes for managing advertisement-related operations.
@@ -33,9 +33,9 @@ router.post('/', verifyToken, require('../controllers/adController/addAd'));
  * @middleware verifyToken - Ensures user authentication before initializing payment
  */
 router.post(
-    '/paymentInit',
-    verifyToken,
-    require('../controllers/adController/paymentInit'),
+	'/paymentInit',
+	verifyToken,
+	require('../controllers/adController/paymentInit')
 );
 
 /**
@@ -45,13 +45,13 @@ router.post(
  * @middleware verifyToken - Ensures user authentication before deleting the ad
  */
 router.delete(
-    '/:id',
-    verifyToken,
-    require('../controllers/adController/deleteAd'),
+	'/:id',
+	verifyToken,
+	require('../controllers/adController/deleteAd')
 );
 
 /**
  * Exports the router for advertisement-related operations to enable its use throughout the application.
  * @module Routes/Ads
  */
-module.exports = router;
+export default router;
