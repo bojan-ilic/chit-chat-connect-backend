@@ -1,11 +1,11 @@
-// Import the Router module from Express
-const { Router } = require('express');
+// Import the Router type from the 'express' module for handling routes
+import {Router} from 'express';
 
 // Import the token verification middleware
-const verifyToken = require('../middleware/verifyToken');
+import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = new Router();
+const router: Router = Router();
 
 /**
  * Routes for managing post-related operations.
@@ -50,9 +50,9 @@ router.get('/user/:userId', require('../controllers/postController/userPosts'));
  * @middleware verifyToken - Ensures user authentication before adding a post
  */
 router.post(
-    '/add',
-    verifyToken,
-    require('../controllers/postController/addPost'),
+	'/add',
+	verifyToken,
+	require('../controllers/postController/addPost')
 );
 
 /**
@@ -62,9 +62,9 @@ router.post(
  * @middleware verifyToken - Ensures user authentication before updating the post
  */
 router.put(
-    '/:id',
-    verifyToken,
-    require('../controllers/postController/updatePost'),
+	'/:id',
+	verifyToken,
+	require('../controllers/postController/updatePost')
 );
 
 /**
@@ -74,13 +74,16 @@ router.put(
  * @middleware verifyToken - Ensures user authentication before deleting a post
  */
 router.delete(
-    '/:id',
-    verifyToken,
-    require('../controllers/postController/deletePost'),
+	'/:id',
+	verifyToken,
+	require('../controllers/postController/deletePost')
 );
 
 /**
+ * Express Router instance for post-related operations.
  * Exports the router for post-related operations to enable its use throughout the application.
+ * Responsible for defining and handling API routes related to posts.
+ * @type {express.Router}
  * @module Routes/Posts
  */
-module.exports = router;
+export default router;
