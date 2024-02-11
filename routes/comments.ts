@@ -5,7 +5,7 @@ import {Router} from 'express';
 import verifyToken from '../middleware/verifyToken';
 
 // Create a new instance of the Express router
-const router = Router();
+const router: Router = Router();
 
 /**
  * Routes for managing comment-related operations.

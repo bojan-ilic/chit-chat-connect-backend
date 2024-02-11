@@ -1,15 +1,15 @@
-// Import the Router module from Express
-const { Router } = require('express');
+// Import the Router type from the 'express' module for handling routes
+import {Router} from 'express';
 
 // Import the token verification middleware
-const verifyToken = require('../middleware/verifyToken');
+import verifyToken from '../middleware/verifyToken';
 
 // Import like-related controllers
 const addLike = require('../controllers/likeController/addLike');
 const removeLike = require('../controllers/likeController/removeLike');
 
 // Create a new instance of the Express router
-const router = new Router();
+const router: Router = Router();
 
 /**
  * Routes for managing like-related operations.
@@ -27,7 +27,10 @@ const router = new Router();
 router.post('/addRemove/:postId', verifyToken, addLike, removeLike);
 
 /**
+ * Express Router instance for like-related operations.
  * Exports the router for like-related operations to enable its use throughout the application.
+ * Responsible for defining and handling API routes related to likes.
+ * @type {express.Router}
  * @module Routes/Likes
  */
-module.exports = router;
+export default router;
