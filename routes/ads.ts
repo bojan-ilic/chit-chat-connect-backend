@@ -1,4 +1,4 @@
-// Import the Router module from Express
+// Import the Router type from the 'express' module for handling routes
 import {Router} from 'express';
 
 // Import the token verification middleware
@@ -51,7 +51,10 @@ router.delete(
 );
 
 /**
+ * Express Router instance for advertisement-related operations.
  * Exports the router for advertisement-related operations to enable its use throughout the application.
+ * Responsible for defining and handling API routes related to advertisements.
+ * @type {express.Router}
  * @module Routes/Ads
  */
 export default router;
