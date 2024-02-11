@@ -4,11 +4,14 @@
  * @module routes/index
  */
 
-// Import the Express framework
-const express = require('express');
+// Import the entire Express framework and name it 'express' to ensure compatibility with 'esModuleInterop' flag in tsconfig.json for default imports
+import * as express from 'express';
+
+// Import the Router type from the 'express' module
+import {Router} from 'express';
 
 // Create a new instance of Express router
-const router = new express.Router();
+const router: Router = express.Router();
 
 // Routes related to managing users' data
 router.use('/users', require('./users'));
@@ -35,7 +38,6 @@ router.use('/ads', require('./ads'));
 router.use('/messages', require('./messages'));
 
 /**
- * Exports the defined router instance to be used as the main API router.
- * @exports router
+ * Exports the defined router instance to be used as the main API router throughout the application.
  */
-module.exports = router;
+export default router;
