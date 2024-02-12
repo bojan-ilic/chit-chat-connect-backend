@@ -50,9 +50,6 @@ interface HttpStatus {
 	};
 }
 
-// Export the HttpStatus interface
-export {HttpStatus};
-
 // Export an object containing HTTP status codes and messages
 export const httpStatus: HttpStatus = {
 	/**
