@@ -4,11 +4,8 @@ import jwt from 'jsonwebtoken';
 // Import Express types (Request, Response, NextFunction) for middleware
 import {Request, Response, NextFunction} from 'express';
 
-// Import the configuration module for the application settings
-import config from '../config/config';
-
 // Retrieve the JWT secret key from the configuration module
-const {JWT_KEY} = config;
+import {JWT_KEY} from '../config/config';
 
 // Import the UserModel representing the Mongoose model for users based on UserSchema
 import UserModel from '../models/userModel';
@@ -17,8 +14,20 @@ import UserModel from '../models/userModel';
 import {httpStatus} from '../config/constants';
 
 /**
+ * Interface extending the Express Request type to include 'locals' property.
+ */
+interface AuthenticatedRequest extends Request {
+	locals: {
+		firstName: string;
+		lastName: string;
+		role: string;
+		_id: string;
+	};
+}
+
+/**
  * Middleware function for validating JSON Web Token (JWT) present in the request headers.
- * @param {Request} req - Express request object containing client data.
+ * @param {AuthenticatedRequest} req - Express request object containing client data.
  * @param {Response} res - Express response object for sending server responses.
  * @param {NextFunction} next - Express next middleware function to pass control.
  */
@@ -44,7 +53,7 @@ const verifyToken: MiddlewareFunction = async (req, res, next) => {
 					const user = await UserModel.findOne({_id: decode._id});
 					if (user) {
 						// Set user information in 'req.locals' and proceed to the next middleware
-						req.locals = {
+						(req as AuthenticatedRequest).locals = {
 							firstName: user.firstName,
 							lastName: user.lastName,
 							role: user.role,
@@ -84,7 +93,7 @@ const verifyToken: MiddlewareFunction = async (req, res, next) => {
  * Type definition for Express middleware function.
  */
 type MiddlewareFunction = (
-	req: Request,
+	req: AuthenticatedRequest,
 	res: Response,
 	next: NextFunction
 ) => Promise<void>;
