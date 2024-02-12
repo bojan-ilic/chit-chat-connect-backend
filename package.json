@@ -1,41 +1,41 @@
 {
-	"name": "chit-chat-connect-backend",
-	"version": "1.0.0",
-	"description": "Social network app",
-	"main": "server.ts",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon server.ts"
+	"name":"chit-chat-connect-backend",
+	"version":"1.0.0",
+	"description":"Social network app backend",
+	"main":"server.ts",
+	"scripts":{
+		"test":"echo \"Error: no test specified\" && exit 1",
+		"start":"nodemon server.ts"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+ssh://git@github.com/bojan-ilic/chit-chat-connect-backend.git"
+	"repository":{
+		"type":"git",
+		"url":"git+ssh://git@github.com/bojan-ilic/chit-chat-connect-backend.git"
 	},
-	"author": "Bojan Ilic",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/bojan-ilic/chit-chat-connect-backend/issues"
+	"author":"Bojan Ilic",
+	"license":"ISC",
+	"bugs":{
+		"url":"https://github.com/bojan-ilic/chit-chat-connect-backend/issues"
 	},
-	"homepage": "https://github.com/bojan-ilic/chit-chat-connect-backend#readme",
-	"devDependencies": {
-		"@types/cors": "^2.8.17",
-		"@types/express": "^4.17.21",
-		"@types/jest": "^29.5.12",
-		"@types/mongoose": "^5.11.97",
-		"jest": "^29.7.0",
-		"nodemon": "^3.0.1",
-		"ts-jest": "^29.1.2",
-		"ts-node": "^10.9.2",
-		"typescript": "^5.3.3"
+	"homepage":"https://github.com/bojan-ilic/chit-chat-connect-backend#readme",
+	"devDependencies":{
+		"@types/cors":"^2.8.17",
+		"@types/express":"^4.17.21",
+		"@types/jest":"^29.5.12",
+		"@types/mongoose":"^5.11.97",
+		"jest":"^29.7.0",
+		"nodemon":"^3.0.1",
+		"ts-jest":"^29.1.2",
+		"ts-node":"^10.9.2",
+		"typescript":"^5.3.3"
 	},
-	"dependencies": {
-		"bcrypt": "^5.1.1",
-		"cors": "^2.8.5",
-		"dotenv": "^16.3.1",
-		"express": "^4.18.2",
-		"jsonwebtoken": "^9.0.2",
-		"moment": "^2.29.4",
-		"mongoose": "^8.0.1",
-		"stripe": "^14.5.0"
+	"dependencies":{
+		"bcrypt":"^5.1.1",
+		"cors":"^2.8.5",
+		"dotenv":"^16.3.1",
+		"express":"^4.18.2",
+		"jsonwebtoken":"^9.0.2",
+		"moment":"^2.29.4",
+		"mongoose":"^8.0.1",
+		"stripe":"^14.5.0"
 	}
 }

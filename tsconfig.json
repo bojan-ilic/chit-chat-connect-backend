@@ -1,10 +1,8 @@
 {
 	/**
 	 * TypeScript Configuration File for the Backend of a ChitChatConnect App.
-	 *
 	 * This configuration file specifies compiler options and file inclusion/exclusion patterns
 	 * for TypeScript, allowing developers to write and compile server-side code using TypeScript.
-	 *
 	 */
 
 	// Compiler Options

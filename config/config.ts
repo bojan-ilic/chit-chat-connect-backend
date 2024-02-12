@@ -19,35 +19,20 @@ const whiteList = [
 ];
 
 /**
- * Configuration options
- * @typedef {Object} ConfigOptions
- * @property {string} JWT_KEY - JWT key for authentication.
- * @property {string} DB_URL - Database connection URL.
- * @property {number} PORT - Port for the server to listen on.
- * @property {string} DB_USERNAME - Database username.
- * @property {string} DB_PASSWORD - Database password.
- * @property {string} STRIPE_SK - Stripe secret key for payment processing.
- * @property {Object} CORS_OPTIONS - CORS options for allowing cross-origin requests.
- * @property {Function} CORS_OPTIONS.origin - Function to determine if the request origin is allowed.
+ * Configuration options along with specific constants for ChitChatConnect.
+ * @type {Object}
  */
-
-export interface ConfigOptions {
-	PORT: number;
-	DB_USERNAME: string;
-	DB_PASSWORD: string;
-	DB_URL: string;
-	DEV_APP_NAME: string;
-	PROD_APP_NAME: string;
-	JWT_KEY: string;
-	STRIPE_SK: string;
-	CORS_OPTIONS: CorsOptions;
-}
-
-/**
- * Configuration settings exported from the configuration module.
- * @type {ConfigOptions}
- */
-const config: ConfigOptions = {
+export const {
+	PORT,
+	DB_USERNAME,
+	DB_PASSWORD,
+	DB_URL,
+	DEV_APP_NAME,
+	PROD_APP_NAME,
+	JWT_KEY,
+	STRIPE_SK,
+	CORS_OPTIONS
+} = {
 	/**
 	 * Port for the server to listen on.
 	 * @type {number}
@@ -113,5 +98,3 @@ const config: ConfigOptions = {
 		}
 	}
 };
-
-export default config;
