@@ -7,7 +7,7 @@ import {Schema, model, Model, Document} from 'mongoose';
  * for interacting with MongoDB documents.
  * @interface Ad
  */
-interface Ad extends Document {
+export interface Ad extends Document {
 	title: string; // Title of the advertisement
 	body: string; // Body/content of the advertisement
 	image: string; // Image associated with the advertisement
