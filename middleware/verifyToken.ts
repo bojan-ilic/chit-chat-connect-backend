@@ -1,5 +1,5 @@
-// Library for JSON Web Token functionality
-import jwt from 'jsonwebtoken';
+// Import JWT library for token verification
+import * as jwt from 'jsonwebtoken';
 
 // Import Express types (Request, Response, NextFunction) for middleware
 import {Request, Response, NextFunction} from 'express';
@@ -27,59 +27,82 @@ interface AuthenticatedRequest extends Request {
 
 /**
  * Middleware function for validating JSON Web Token (JWT) present in the request headers.
- * @param {AuthenticatedRequest} req - Express request object containing client data.
+ * @param {Request | AuthenticatedRequest} req - Express request object containing client data.
  * @param {Response} res - Express response object for sending server responses.
  * @param {NextFunction} next - Express next middleware function to pass control.
  */
 
-const verifyToken: MiddlewareFunction = async (req, res, next) => {
+const verifyToken: MiddlewareFunction = async (req: Request | AuthenticatedRequest, res: Response, next: NextFunction) => {
 	// Check if the 'authorization' property exists in the request headers
 	if (req.headers.hasOwnProperty('authorization')) {
 		// Extracts the JWT token from the 'authorization' header in the request
 		let token = req.headers.authorization;
 
-		// Verify the token using JWT
-		jwt.verify(token, JWT_KEY, async (error, decode) => {
-			if (error) {
-				// Token verification failed or expired, send appropriate error response
-				res.status(httpStatus.TOKEN_EXPIRED.code).send({
-					message: httpStatus.TOKEN_EXPIRED.message,
-					customMessage: 'Token has expired. Please log in again.'
-				});
-			} else {
-				// Token successfully verified
-				try {
-					// Find user based on decoded token information
-					const user = await UserModel.findOne({_id: decode._id});
-					if (user) {
-						// Set user information in 'req.locals' and proceed to the next middleware
-						(req as AuthenticatedRequest).locals = {
-							firstName: user.firstName,
-							lastName: user.lastName,
-							role: user.role,
-							_id: decode._id
-						};
-						next();
-					} else {
-						// Invalid token, user not found, send appropriate error response
+		// Check if 'token' is defined
+		if (token) {
+			/**
+			 * Verify the token using JWT and handle the result.
+			 *
+			 * @param {Error | null} error - If present, indicates that token verification failed or expired.
+			 * @param {string | jwt.JwtPayload | undefined} decode - Can be:
+			 *   - 'string' (if the token is successfully decoded),
+			 *   - 'undefined' (if decoding encounters an error),
+			 *   - 'jwt.JwtPayload' (when the token is successfully decoded).
+			 */
+			jwt.verify(token, JWT_KEY, async (error: Error | null, decode: string | jwt.JwtPayload | undefined) => {
+					if (error) {
+						// Token verification failed or expired, send appropriate error response
 						res.status(httpStatus.TOKEN_EXPIRED.code).send({
 							message: httpStatus.TOKEN_EXPIRED.message,
-							customMessage:
-								'Token is invalid, authorization denied.'
+							customMessage: 'Token has expired. Please log in again.',
+							error: (error as Error).message
 						});
+					} else {
+						// Token successfully verified
+						try {
+							// Check if 'decode' is of type 'jwt.JwtPayload'
+							if (decode && typeof decode !== 'string') {
+								// Find user based on decoded token information
+								const user = await UserModel.findOne({_id: decode._id});
+
+								if (user) {
+									// Set user information in 'req.locals' and proceed to the next middleware
+									(req as AuthenticatedRequest).locals = {
+										firstName: user.firstName,
+										lastName: user.lastName,
+										role: user.role,
+										_id: decode._id
+									};
+									next();
+								} else {
+									// Invalid token, user not found, send appropriate error response
+									res.status(httpStatus.TOKEN_EXPIRED.code).send({
+										message: httpStatus.TOKEN_EXPIRED.message,
+										customMessage:
+											'Token is invalid, authorization denied.'
+									});
+								}
+							}
+						} catch (error) {
+							// Error occurred during user retrieval, send service error response
+							res.status(httpStatus.SERVICE_ERROR.code).send({
+								status: 'error',
+								message: httpStatus.SERVICE_ERROR.message,
+								customMessage:
+									'Error occurred while fetching user data.',
+								error: (error as Error).message
+							});
+						}
 					}
-				} catch (error) {
-					// Error occurred during user retrieval, send service error response
-					res.status(httpStatus.SERVICE_ERROR.code).send({
-						status: 'error',
-						message: httpStatus.SERVICE_ERROR.message,
-						customMessage:
-							'Error occurred while fetching user data.',
-						error: error.message
-					});
 				}
-			}
-		});
+			);
+		} else {
+			// Case when 'token' is undefined (no 'authorization' header found)
+			res.status(httpStatus.UNAUTHORIZED.code).send({
+				message: httpStatus.UNAUTHORIZED.message,
+				customMessage: 'You are not logged in, authentication required.'
+			});
+		}
 	} else {
 		// 'authorization' property not found in request headers, user not logged in
 		res.status(httpStatus.TOKEN_EXPIRED.code).send({
@@ -93,7 +116,7 @@ const verifyToken: MiddlewareFunction = async (req, res, next) => {
  * Type definition for Express middleware function.
  */
 type MiddlewareFunction = (
-	req: AuthenticatedRequest,
+	req: Request | AuthenticatedRequest,
 	res: Response,
 	next: NextFunction
 ) => Promise<void>;
