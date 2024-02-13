@@ -13,7 +13,7 @@
  */
 
 // Import the Express framework for building the server
-import * as express from 'express';
+const express = require('express');
 
 // Import Request and Response types from Express for improved type annotations
 import {Request, Response} from 'express';
