@@ -32,6 +32,11 @@ interface HttpStatus {
 		code: number;
 		message: string;
 	};
+	UNAUTHORIZED: {
+		code: number;
+		message: string;
+	};
+
 
 	/**
 	 * Success
@@ -79,6 +84,11 @@ export const httpStatus: HttpStatus = {
 	NOT_HAVE_PERMISSION: {
 		code: 403,
 		message: 'Access denied: insufficient permissions'
+	},
+	// Indicates unauthorized access, requiring authentication
+	UNAUTHORIZED: {
+		code: 401,
+		message: 'You are not logged in, authentication required.'
 	},
 
 	/**
