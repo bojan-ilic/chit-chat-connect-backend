@@ -87,7 +87,7 @@ export const {
 	 *  @property {Function} origin - Function to determine if the request origin is allowed.
 	 */
 	CORS_OPTIONS: {
-		origin: (origin, callback) => {
+		origin: (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) => {
 			if (!origin || whiteList.includes(origin)) {
 				// If the request origin is in the whitelist or is absent (local request)
 				callback(null, true);
