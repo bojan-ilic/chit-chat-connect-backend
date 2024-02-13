@@ -1,5 +1,5 @@
 // Import the 'jsonwebtoken' library for handling JSON Web Tokens (JWT)
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 // Extract the 'JWT_KEY' constant from the configuration file to facilitate JWT encoding and decoding
 import {JWT_KEY} from '../config/config';
