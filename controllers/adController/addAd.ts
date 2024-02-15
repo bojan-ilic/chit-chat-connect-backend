@@ -8,7 +8,7 @@ import {httpStatus} from '../../config/constants';
 import AdModel, {Ad} from '../../models/adModel';
 
 // Import Moment.js for date and time manipulation and formatting
-import * as moment from 'moment';
+import moment = require('moment');
 
 /**
  * Interface extending the Express Request type to include 'locals' property with authentication-related data.
@@ -20,6 +20,15 @@ interface AuthenticatedRequest extends Request {
 	};
 }
 
+
+interface ApiResponse {
+	status: string;
+	message: string;
+	customMessage?: string;
+	data?: any;
+	error?: string;
+}
+
 /**
  * Controller function to handle the addition of a new advertisement to the database.
  * Extracts required data from the request object and creates a new ad using AdModel.
@@ -27,7 +36,7 @@ interface AuthenticatedRequest extends Request {
  * @param {Response} res - The server response object used to send success or error messages when adding an advertisement.
  * @returns {Promise<void>} - Resolves when the advertisement is added successfully, or rejects with an error message if the addition is unsuccessful.
  */
-const addAd = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+const addAd = async (req: AuthenticatedRequest, res: Response): Promise<ApiResponse> => {
 	try {
 		// Extract user ID from the token representing the logged-in user
 		const {_id: userId} = req.locals;
@@ -35,9 +44,13 @@ const addAd = async (req: AuthenticatedRequest, res: Response): Promise<void> =>
 		// Extracts advertisement details from the request body according to the AdSchema
 		let {title, startDate, endDate, ...reqBody} = req.body;
 
-		// Format the start and end dates using Moment.js
-		startDate = new Date(moment(startDate).format('YYYY-MM-DD'));
-		endDate = new Date(moment(endDate).format('YYYY-MM-DD'));
+		// Format dates using moment
+		const formattedStartDate = moment(startDate).format('YYYY-MM-DD');
+		const formattedEndDate = moment(endDate).format('YYYY-MM-DD');
+
+		// Create Date objects
+		const startDateObj = new Date(formattedStartDate);
+		const endDateObj = new Date(formattedEndDate);
 
 		// Check if an ad with the same title already exists for this user
 		const existingAd = await AdModel.findOne({title, userId});
@@ -55,8 +68,8 @@ const addAd = async (req: AuthenticatedRequest, res: Response): Promise<void> =>
 		const newAd: Ad = new AdModel({
 			...reqBody,
 			title,
-			startDate,
-			endDate,
+			startDate: startDateObj,
+			endDate: endDateObj,
 			userId
 		});
 
@@ -64,20 +77,25 @@ const addAd = async (req: AuthenticatedRequest, res: Response): Promise<void> =>
 		const saveAd = await newAd.save();
 
 		// Send a success response after adding the advertisement to the database
-		res.status(httpStatus.SUCCESS.code).send({
+		const successResponse: ApiResponse = {
 			status: 'success',
 			message: httpStatus.SUCCESS.message,
 			customMessage: 'Advertisement added successfully.',
 			data: saveAd // Include the advertisement data in the success response
-		});
+		};
+		res.status(httpStatus.SUCCESS.code).send(successResponse);
+		return successResponse;
 	} catch (error) {
 		// Error handling and sending an appropriate error response
-		res.status(httpStatus.SERVICE_ERROR.code).send({
+		const errorResponse: ApiResponse = {
 			status: 'error',
 			message: httpStatus.SERVICE_ERROR.message,
-			customMessage: 'Failed to save advertisement to database.',
-			error: error.message
-		});
+			customMessage: 'Failed to save advertisement to the database.',
+			error: (error as Error).message
+		};
+		res.status(httpStatus.SERVICE_ERROR.code).send(errorResponse);
+
+		return errorResponse;
 	}
 };
 
