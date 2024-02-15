@@ -46,7 +46,8 @@
 		// Include types for Node.js runtime and Mongoose library
 		"types":[
 			"node",
-			"mongoose"
+			"mongoose",
+			"jest"
 		]
 	},
 	// Include patterns for TypeScript source files
