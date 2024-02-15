@@ -4,7 +4,7 @@
 	"description": "Social network app backend",
 	"main": "server.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "jest",
 		"start": "nodemon server.ts"
 	},
 	"repository": {
@@ -35,7 +35,7 @@
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
 		"jsonwebtoken": "^9.0.2",
-		"moment": "^2.29.4",
+		"moment": "^2.30.1",
 		"mongoose": "^8.0.1",
 		"stripe": "^14.5.0"
 	}
