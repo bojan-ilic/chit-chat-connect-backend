@@ -18,6 +18,10 @@
 		"url":"https://github.com/bojan-ilic/chit-chat-connect-backend/issues"
 	},
 	"homepage":"https://github.com/bojan-ilic/chit-chat-connect-backend#readme",
+	"engines":{
+		"node":"20.x",
+		"npm":"10.x"
+	},
 	"devDependencies":{
 		"nodemon":"^3.0.1"
 	},
