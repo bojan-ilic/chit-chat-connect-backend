@@ -4,13 +4,16 @@ const express = require('express');
 // Importing Mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 
+// Importing path module for working with file paths
+const path = require('path');
+
 // Access environment variables
 const environment = process.env.NODE_ENV;
 const {
-    PROD_APP_NAME,
-    DEV_APP_NAME,
-    PORT,
-    DB_URL,
+	PROD_APP_NAME,
+	DEV_APP_NAME,
+	PORT,
+	DB_URL
 } = require('./config/config');
 
 // Initialize Express server
@@ -18,13 +21,16 @@ const server = express();
 
 // Connect to MongoDB
 mongoose
-    .connect(DB_URL)
-    .then(() => console.log('MongoDB connected'))
-    .catch((error) => console.error('MongoDB connection error: ', error));
+	.connect(DB_URL)
+	.then(() => console.log('MongoDB connected'))
+	.catch((error) => console.error('MongoDB connection error: ', error));
 
 // Middleware to parse JSON data with a size limit of 10mb
 // Crucial for handling POST requests that contain JSON data
-server.use(express.json({ limit: '10mb' }));
+server.use(express.json({limit: '10mb'}));
+
+// Middleware to serve static files from the 'build' directory
+server.use(express.static(path.join(__dirname, 'build')));
 
 /**
  * Route for the root URL
@@ -32,15 +38,15 @@ server.use(express.json({ limit: '10mb' }));
  * @param {Object} res - Express response object
  */
 server.get('/', (req, res) => {
-    // Determine application name based on environment
-    const appName = environment === 'production' ? PROD_APP_NAME : DEV_APP_NAME;
+	// Determine application name based on environment
+	const appName = environment === 'production' ? PROD_APP_NAME : DEV_APP_NAME;
 
-    // Determine environment message
-    const environmentMessage =
-        environment === 'production' ? 'production' : 'development';
+	// Determine environment message
+	const environmentMessage =
+		environment === 'production' ? 'production' : 'development';
 
-    // Send welcome message based on environment and app name
-    res.send(`Welcome to the ${environmentMessage} environment of ${appName}`);
+	// Send welcome message based on environment and app name
+	res.send(`Welcome to the ${environmentMessage} environment of ${appName}`);
 });
 
 // Set up API routes handling for requests starting with '/api'
@@ -51,13 +57,13 @@ server.use('/api', require('./routes'));
  * This helps in proper cleanup and resource release before the server stops.
  */
 process.on('SIGINT', () => {
-    console.log('MongoDB disconnected through app termination');
-    process.exit(0);
+	console.log('MongoDB disconnected through app termination');
+	process.exit(0);
 });
 
 /**
  Start the server
  */
 server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+	console.log(`Server is running on http://localhost:${PORT}`);
 });
