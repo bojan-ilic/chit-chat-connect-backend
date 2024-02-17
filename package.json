@@ -5,8 +5,7 @@
 	"main":"server.js",
 	"scripts":{
 		"test":"echo \"Error: no test specified\" && exit 1",
-		"start":"nodemon server.js",
-		"heroku-postbuild":"cd /var/www/chit-chat-connect/frontend && npm install && npm run build"
+		"start":"node server.js"
 	},
 	"repository":{
 		"type":"git",
