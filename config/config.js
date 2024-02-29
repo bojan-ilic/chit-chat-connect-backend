@@ -14,7 +14,7 @@ const whiteList = [
 	'https://chit-chat-connect.bojanilic.net', // Production: Frontend URL
 	'https://backend.chit-chat-connect.bojanilic.net', // Production: Backend URL
 	'http://localhost:3000', // Development: Frontend URL
-	`http://localhost:${process.env.PORT || 4000}` // Development: Backend URL
+	`http://localhost:${process.env.PORT}` // Development: Backend URL
 ];
 
 /**
