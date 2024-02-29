@@ -1,6 +1,9 @@
 // Importing the Express framework for building the server
 const express = require('express');
 
+// Import cors package to enable Cross-Origin Resource Sharing (CORS) for this Express application
+const cors = require('cors');
+
 // Importing Mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 
@@ -12,12 +15,16 @@ const environment = process.env.NODE_ENV;
 const {
 	PROD_APP_NAME,
 	DEV_APP_NAME,
+	CORS_OPTIONS,
 	PORT,
 	DB_URL
 } = require('./config/config');
 
 // Initialize Express server
 const server = express();
+
+// Use CORS middleware with predefined options to allow requests from whitelisted origins
+server.use(cors(CORS_OPTIONS));
 
 // Connect to MongoDB
 mongoose
