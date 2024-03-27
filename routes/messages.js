@@ -1,5 +1,5 @@
 // Import the Router module from Express
-const { Router } = require('express');
+const {Router} = require('express');
 
 // Import the token verification middleware
 const verifyToken = require('../middleware/verifyToken');
@@ -13,21 +13,21 @@ const router = new Router();
  * @middleware verifyToken - Ensures user authentication before fetching user-specific messages
  */
 router.get(
-    '/',
-    verifyToken,
-    require('../controllers/messageController/getAllMessages'),
+	'/',
+	verifyToken,
+	require('../controllers/messageController/getAllMessages')
 );
 
 /**
- * @description Route to add a new message
+ * @description Route to add a new message, accepting an optional 'userId' parameter for private messages; omit 'userId' for public messages.
  * @route POST /api/messages/addMessage/:userId
  * @param {string} userId - The ID of the message receiver
  * @middleware verifyToken - Ensures user authentication before adding a message
  */
 router.post(
-    '/addMessage/:userId',
-    verifyToken,
-    require('../controllers/messageController/addMessage'),
+	'/addMessage/:userId?',
+	verifyToken,
+	require('../controllers/messageController/addMessage')
 );
 
 /**
