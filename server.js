@@ -1,14 +1,17 @@
-// Importing the Express framework for building the server
+// Import the Express framework for building the server
 const express = require('express');
 
 // Import cors package to enable Cross-Origin Resource Sharing (CORS) for this Express application
 const cors = require('cors');
 
-// Importing Mongoose for MongoDB object modeling
+// Import Mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 
-// Importing path module for working with file paths
-const path = require('path');
+// Import HTTP for creating an HTTP server
+const http = require('http');
+
+// Import Socket.IO for real-time communication
+const socketIo = require('socket.io');
 
 // Access environment variables
 const environment = process.env.NODE_ENV;
@@ -20,11 +23,15 @@ const {
 	DB_URL
 } = require('./config/config');
 
-// Initialize Express server
-const server = express();
+// Initialize the Express application
+const expressApp = express();
 
 // Use CORS middleware with predefined options to allow requests from whitelisted origins
-server.use(cors(CORS_OPTIONS));
+expressApp.use(cors(CORS_OPTIONS));
+
+// Middleware to parse JSON data with a size limit of 10mb
+// Crucial for handling POST requests that contain JSON data
+expressApp.use(express.json({limit: '10mb'}));
 
 // Connect to MongoDB
 mongoose
@@ -32,19 +39,12 @@ mongoose
 	.then(() => console.log('MongoDB connected'))
 	.catch((error) => console.error('MongoDB connection error: ', error));
 
-// Middleware to parse JSON data with a size limit of 10mb
-// Crucial for handling POST requests that contain JSON data
-server.use(express.json({limit: '10mb'}));
-
-// Middleware to serve static files from the 'build' directory
-server.use(express.static(path.join(__dirname, 'build')));
-
 /**
  * Route for the root URL
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-server.get('/', (req, res) => {
+expressApp.get('/', (req, res) => {
 	// Determine application name based on environment
 	const appName = environment === 'production' ? PROD_APP_NAME : DEV_APP_NAME;
 
@@ -57,7 +57,38 @@ server.get('/', (req, res) => {
 });
 
 // Set up API routes handling for requests starting with '/api'
-server.use('/api', require('./routes'));
+expressApp.use('/api', require('./routes'));
+
+// Create an HTTP server from the Express app
+const httpServer = http.createServer(expressApp);
+
+// Initialize Socket.IO with the HTTP server
+const ioServer = socketIo(httpServer, {
+	cors: {
+		origin: CORS_OPTIONS.origin, // Use the CORS options from your config
+		methods: ["GET", "POST"]
+	}
+});
+
+// Socket.IO setup for handling real-time chat functionality
+ioServer.on('connection', (socket) => {
+	console.log('A user connected', socket.id);
+
+	// Emit a test event to the connected client
+	socket.emit('customEvent', 'Hello from server!');
+
+	// Handle chat events, disconnections, etc.
+	socket.on('disconnect', () => {
+		console.log('User disconnected', socket.id);
+	});
+});
+
+/**
+ Start the server
+ */
+httpServer.listen(PORT, () => {
+	console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 /**
  * Listens for a termination signal (SIGINT: Signal Interrupt) to ensure graceful shutdown by closing the MongoDB connection.
@@ -66,11 +97,4 @@ server.use('/api', require('./routes'));
 process.on('SIGINT', () => {
 	console.log('MongoDB disconnected through app termination');
 	process.exit(0);
-});
-
-/**
- Start the server
- */
-server.listen(PORT, () => {
-	console.log(`Server is running on http://localhost:${PORT}`);
 });
