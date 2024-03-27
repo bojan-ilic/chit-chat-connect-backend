@@ -3,11 +3,22 @@ GET {{base_url}}/messages
 Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
 
-### ADD A NEW MESSAGE
+### ADD A PRIVATE MESSAGE
 POST {{base_url}}/messages/addMessage/{{receiver_id}}
 Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
 
 {
-    "message": "Example message text!!!"
+    "message": "This is a private message!",
+    "isPublic": false
+}
+
+### ADD A PUBLIC MESSAGE
+POST {{base_url}}/messages/addMessage
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+{
+    "message": "This is a public message!",
+    "isPublic": true
 }
