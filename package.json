@@ -1,37 +1,38 @@
 {
-	"name":"chit-chat-connect-backend",
-	"version":"1.0.0",
-	"description":"Social network app",
-	"main":"server.js",
-	"scripts":{
-		"test":"echo \"Error: no test specified\" && exit 1",
-		"start":"node server.js"
+	"name": "chit-chat-connect-backend",
+	"version": "1.0.0",
+	"description": "Social network app",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node server.js"
 	},
-	"repository":{
-		"type":"git",
-		"url":"git+ssh://git@github.com/bojan-ilic/chit-chat-connect-backend.git"
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/bojan-ilic/chit-chat-connect-backend.git"
 	},
-	"author":"Bojan Ilic",
-	"license":"ISC",
-	"bugs":{
-		"url":"https://github.com/bojan-ilic/chit-chat-connect-backend/issues"
+	"author": "Bojan Ilic",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/bojan-ilic/chit-chat-connect-backend/issues"
 	},
-	"homepage":"https://github.com/bojan-ilic/chit-chat-connect-backend#readme",
-	"engines":{
-		"node":"20.x",
-		"npm":"10.x"
+	"homepage": "https://github.com/bojan-ilic/chit-chat-connect-backend#readme",
+	"engines": {
+		"node": "20.x",
+		"npm": "10.x"
 	},
-	"devDependencies":{
-		"nodemon":"^3.0.1"
+	"devDependencies": {
+		"nodemon": "^3.0.1"
 	},
-	"dependencies":{
-		"bcrypt":"^5.1.1",
-		"cors":"^2.8.5",
-		"dotenv":"^16.3.1",
-		"express":"^4.18.2",
-		"jsonwebtoken":"^9.0.2",
-		"moment":"^2.29.4",
-		"mongoose":"^8.0.1",
-		"stripe":"^14.5.0"
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.2",
+		"moment": "^2.29.4",
+		"mongoose": "^8.0.1",
+		"socket.io": "^4.7.5",
+		"stripe": "^14.5.0"
 	}
 }
