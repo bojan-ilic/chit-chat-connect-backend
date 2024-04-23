@@ -26,7 +26,7 @@ const getAllMessages = async (req, res) => {
 				{$and: [{receiverId: loggedInUserID}, {isPublic: false}]}, // Match private messages received by the logged-in user
 				{isPublic: true} // Match messages marked as public
 			]
-		}).sort({createdAt: -1}); // Sort messages by creation date
+		}).sort({createdAt: 1}); // Sort messages in ascending order by creation date
 
 		// Send the retrieved messages in the response
 		res.status(httpStatus.SUCCESS.code).send({
