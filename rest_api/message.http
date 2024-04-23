@@ -1,5 +1,10 @@
-### GET ALL MESSAGES
+### GET ALL MESSAGES (both public and private for authenticated user)
 GET {{base_url}}/messages
+Content-Type: {{content_type}}
+Authorization: {{authorization_token}}
+
+### FETCH PRIVATE MESSAGES BETWEEN LOGGED-IN USER AND ANOTHER SPECIFIED USER
+GET {{base_url}}/messages/private/{{receiver_id}}
 Content-Type: {{content_type}}
 Authorization: {{authorization_token}}
 
