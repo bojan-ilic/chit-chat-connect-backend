@@ -1,7 +1,15 @@
+/**
+ * The server.js file sets up and runs the main server for ChitChatConnect.
+ * It initializes the Express server, sets up middleware for CORS and JSON parsing, connects to MongoDB, and handles API routes.
+ * It also configures Socket.IO for real-time communication and handles graceful shutdown on receiving SIGINT.
+ * @returns {void} Does not return anything.
+ * @type {module} This file acts as the entry point for the server.
+ */
+
 // Import the Express framework for building the server
 const express = require('express');
 
-// Import cors package to enable Cross-Origin Resource Sharing (CORS) for this Express application
+// Import cors package to enable Cross-Origin Resource Sharing (CORS)
 const cors = require('cors');
 
 // Import Mongoose for MongoDB object modeling
@@ -10,11 +18,10 @@ const mongoose = require('mongoose');
 // Import HTTP for creating an HTTP server
 const http = require('http');
 
-// Import Socket.IO for real-time communication
-const socketIo = require('socket.io');
+// Import the socket configuration module
+const setupSocket = require('./utils/socket');
 
-// Access environment variables
-const environment = process.env.NODE_ENV;
+// Access environment variables from configuration file
 const {
 	PROD_APP_NAME,
 	DEV_APP_NAME,
@@ -33,24 +40,23 @@ expressApp.use(cors(CORS_OPTIONS));
 // Crucial for handling POST requests that contain JSON data
 expressApp.use(express.json({limit: '10mb'}));
 
-// Connect to MongoDB
-mongoose
-	.connect(DB_URL)
+// Connect to MongoDB using the connection string from configuration
+mongoose.connect(DB_URL)
 	.then(() => console.log('MongoDB connected'))
-	.catch((error) => console.error('MongoDB connection error: ', error));
+	.catch((error) => console.error('MongoDB connection error:', error));
 
 /**
- * Route for the root URL
+ * Handles the root URL of the server.
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
+ * Returns a welcoming message with the application name and environment.
  */
 expressApp.get('/', (req, res) => {
 	// Determine application name based on environment
-	const appName = environment === 'production' ? PROD_APP_NAME : DEV_APP_NAME;
+	const appName = process.env.NODE_ENV === 'production' ? PROD_APP_NAME : DEV_APP_NAME;
 
 	// Determine environment message
-	const environmentMessage =
-		environment === 'production' ? 'production' : 'development';
+	const environmentMessage = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 	// Send welcome message based on environment and app name
 	res.send(`Welcome to the ${environmentMessage} environment of ${appName}`);
@@ -62,30 +68,10 @@ expressApp.use('/api', require('./routes'));
 // Create an HTTP server from the Express app
 const httpServer = http.createServer(expressApp);
 
-// Initialize Socket.IO with the HTTP server
-const ioServer = socketIo(httpServer, {
-	cors: {
-		origin: CORS_OPTIONS.origin, // Use the CORS options from your config
-		methods: ["GET", "POST"]
-	}
-});
+// Initialize Socket.IO with the HTTP server using the setupSocket function
+setupSocket(httpServer);
 
-// Socket.IO setup for handling real-time chat functionality
-ioServer.on('connection', (socket) => {
-	console.log('A user connected', socket.id);
-
-	// Emit a test event to the connected client
-	socket.emit('customEvent', 'Hello from server!');
-
-	// Handle chat events, disconnections, etc.
-	socket.on('disconnect', () => {
-		console.log('User disconnected', socket.id);
-	});
-});
-
-/**
- Start the server
- */
+// Start the server
 httpServer.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -96,5 +82,6 @@ httpServer.listen(PORT, () => {
  */
 process.on('SIGINT', () => {
 	console.log('MongoDB disconnected through app termination');
-	process.exit(0);
+	mongoose.disconnect(); // Mongoose disconnects when the application terminates
+	process.exit(0); // Exit the process with a status code of 0, indicating a successful shutdown
 });
