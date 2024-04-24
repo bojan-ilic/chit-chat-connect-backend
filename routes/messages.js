@@ -30,9 +30,22 @@ router.post(
 	require('../controllers/messageController/addMessage')
 );
 
+
+/**
+ * @description Route to fetch private messages between the logged-in user and another specified user
+ * @route GET /api/messages/private/:userId
+ * @param {string} userId - The ID of the other user involved in the private conversation
+ * @middleware verifyToken - Ensures user authentication before fetching private messages
+ */
+router.get(
+	'/private/:userId',
+	verifyToken,
+	require('../controllers/messageController/getPrivateMessages')
+);
+
 /**
  * Exports the router for message-related operations to enable its use throughout the application.
- * Manages routes for adding messages to specific users and retrieving user-specific messages.
+ * Manages routes for adding messages to specific users and retrieving user-specific messages, including private conversations.
  * @module Routes/Messages
  */
 module.exports = router;
